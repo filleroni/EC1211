@@ -55,8 +55,10 @@
   function tfmt(t) { return Number.isInteger(t) ? String(t).replace("-", "−") : fmt(t); }
   function compile(expr, names) {
     try {
-      // non-strict so `with(Math)` lets authors write pow(), sqrt(), exp() …
-      return new Function(...names, "x", "with (Math) { return (" + expr + "); }");
+      // Make Math functions/constants (pow, sqrt, exp, PI …) available, but let parameter names win (e.g. a parameter called E).
+      const own = new Set([...names, "x"]);
+      const mathVars = Object.getOwnPropertyNames(Math).filter(k => !own.has(k)).map(k => `${k} = Math.${k}`);
+      return new Function(...names, "x", (mathVars.length ? "var " + mathVars.join(", ") + ";" : "") + " return (" + expr + ");");
     } catch (e) {
       console.error("Bad expression:", expr, e);
       return () => NaN;
