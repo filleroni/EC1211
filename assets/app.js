@@ -2,6 +2,8 @@
 (function () {
   const LECTURES = [];
   window.registerLecture = function (lec) { LECTURES.push(lec); };
+  const DUGGOR = [];
+  window.registerDugga = function (d) { DUGGOR.push(d); };
 
   /* ---------- markdown + math helpers ---------- */
   function protectMath(src) {
@@ -41,6 +43,9 @@
   }
   async function loadAll() {
     for (const f of window.LECTURE_FILES || []) await loadScript("lectures/" + f + (window.CACHE_BUST || ""));
+    await loadScript("duggor/manifest.js" + (window.CACHE_BUST || ""));
+    for (const f of window.DUGGA_FILES || []) await loadScript("duggor/" + f + (window.CACHE_BUST || ""));
+    DUGGOR.sort((a, b) => a.number - b.number);
     LECTURES.sort((a, b) => (a.number ?? 999) - (b.number ?? 999));
     LECTURES.forEach((l, i) => { if (!l.id) l.id = "lecture-" + (i + 1); });
   }
@@ -212,6 +217,101 @@
     };
   }
 
+  /* ---------- duggor ---------- */
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignore */ } },
+  };
+
+  function duggaList() {
+    document.title = "Övningsduggor";
+    app.innerHTML = "";
+    app.append(h("h1", null, "Övningsduggor"));
+    app.append(h("p", "muted", "Egna övningsduggor i samma format som kursens duggor: 10 flervalsfrågor med ett rätt svar var. Godkänt (G) kräver minst 6 rätt. Skrivtiden är 2 timmar."));
+    if (!DUGGOR.length) { app.append(h("div", "card", "Inga övningsduggor ännu.")); return; }
+    DUGGOR.forEach(d => {
+      app.append(h("h2", null, d.title));
+      if (d.description) app.append(h("p", "muted", d.description));
+      const grid = h("div", "grid");
+      d.exams.forEach(ex => {
+        const a = h("a", "card lec-card"); a.href = `#/dugga/${d.id}/${ex.id}`;
+        a.append(h("div", "lec-num", d.title));
+        a.append(h("h3", null, ex.title));
+        if (ex.summary) a.append(h("div", "muted", ex.summary));
+        const best = store.get(`best:${d.id}:${ex.id}`);
+        a.append(h("div", "lec-meta", `${ex.questions.length} frågor` + (best != null ? ` · bästa resultat: ${best}/${ex.questions.length}` : "")));
+        grid.append(a);
+      });
+      const r = h("a", "card lec-card"); r.href = `#/dugga/${d.id}/slump`;
+      r.append(h("div", "lec-num", d.title));
+      r.append(h("h3", null, "Slumpad dugga"));
+      r.append(h("div", "muted", "10 frågor som dras slumpmässigt från alla övningsduggor ovan. Ny kombination varje gång."));
+      r.append(h("div", "lec-meta", `${d.exams.reduce((n, e) => n + e.questions.length, 0)} frågor i banken`));
+      grid.append(r);
+      app.append(grid);
+    });
+  }
+
+  function duggaExam(did, eid) {
+    const d = DUGGOR.find(x => x.id === did);
+    if (!d) { app.innerHTML = "<p>Duggan hittades inte.</p>"; return; }
+    let title, questions;
+    if (eid === "slump") {
+      title = "Slumpad dugga";
+      const pool = shuffle(d.exams.flatMap(e => e.questions.map(q => ({ ...q, _source: e.title }))));
+      // försök täcka så många olika kapitel som möjligt
+      const picked = [], seen = new Set();
+      pool.forEach(q => { if (picked.length < 10 && !seen.has(q.ch)) { picked.push(q); seen.add(q.ch); } });
+      pool.forEach(q => { if (picked.length < 10 && !picked.includes(q)) picked.push(q); });
+      questions = picked.sort((a, b) => (a.ch || 0) - (b.ch || 0));
+    } else {
+      const ex = d.exams.find(x => x.id === eid);
+      if (!ex) { app.innerHTML = "<p>Duggan hittades inte.</p>"; return; }
+      title = ex.title; questions = ex.questions;
+    }
+    questions = questions.map(q => ({ ...q, topic: q.ch ? "Kapitel " + q.ch : q.topic }));
+    document.title = `${d.title}: ${title}`;
+    app.innerHTML = "";
+    const back = h("a", null, "← Alla övningsduggor"); back.href = "#/duggor";
+    app.append(back);
+    app.append(h("h1", null, `${d.title}: ${title}`));
+    const info = h("div", "card exam-info");
+    info.append(h("span", null, `${questions.length} frågor · 1 poäng per fråga · G vid minst 6 rätt · skrivtid 2 timmar`));
+    const timer = h("span", "timer", "2:00:00");
+    const tbtn = h("button", "ghost", "Starta klocka");
+    let tid = null;
+    tbtn.onclick = () => {
+      if (tid) return;
+      const end = Date.now() + 2 * 3600 * 1000;
+      const tick = () => {
+        const ms = Math.max(0, end - Date.now());
+        const s2 = Math.floor(ms / 1000);
+        timer.textContent = `${Math.floor(s2 / 3600)}:${String(Math.floor(s2 / 60) % 60).padStart(2, "0")}:${String(s2 % 60).padStart(2, "0")}`;
+        if (ms === 0 || !document.body.contains(timer)) { clearInterval(tid); }
+      };
+      tid = setInterval(tick, 1000); tick();
+      tbtn.disabled = true;
+    };
+    info.append(timer, tbtn);
+    if (eid === "slump") {
+      const again = h("button", "ghost", "Dra nya frågor");
+      again.onclick = () => duggaExam(did, eid);
+      info.append(again);
+    }
+    app.append(info);
+    app.append(h("p", "muted", "Svara på alla frågor och tryck sedan på ”Lämna in” längst ned. Därefter ser du rätt svar och förklaringar."));
+    window.renderQuiz(app, questions, {
+      mode: "exam", letters: true, passMark: d.passMark ?? 6,
+      onSubmit: right => {
+        if (eid === "slump") return;
+        const k = `best:${did}:${eid}`;
+        const prev = store.get(k);
+        if (prev == null || right > prev) store.set(k, right);
+      },
+    });
+    window.typeset(app);
+  }
+
   /* ---------- router ---------- */
   function route() {
     const parts = location.hash.replace(/^#\/?/, "").split("/");
@@ -224,7 +324,10 @@
       return;
     }
     app.dataset.lec = "";
-    if (parts[0] === "quiz") builder(); else home();
+    if (parts[0] === "quiz") builder();
+    else if (parts[0] === "duggor") duggaList();
+    else if (parts[0] === "dugga" && parts[1] && parts[2]) duggaExam(parts[1], parts[2]);
+    else home();
     window.scrollTo(0, 0);
   }
 

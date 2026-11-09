@@ -95,3 +95,24 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 .builder-list .count { margin-left: auto; color: var(--muted); font-size: .85rem; }
 .opts-row label { margin-right: 16px; }
 @media (max-width: 600px) { .topbar { padding: 10px 14px; } .topbar nav a { margin-left: 12px; } h1 { font-size: 1.5rem; } }
+
+/* exam figures */
+.qtext p { margin: 6px 0; }
+.qtext table { border-collapse: collapse; margin: 8px 0; font-weight: 400; }
+.qtext th, .qtext td { border: 1px solid var(--line); padding: 4px 10px; text-align: right; }
+.qtext th:first-child, .qtext td:first-child { text-align: left; }
+.section table { border-collapse: collapse; margin: 10px 0; }
+.section th, .section td { border-bottom: 1px solid var(--line); padding: 5px 10px; }
+.qfig .graph, .fig-cell .graph { margin: 8px 0; padding: 10px; }
+.qfig { max-width: 520px; }
+.fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.fig-letter { font-weight: 700; }
+.grade { font-size: 1.15rem; font-weight: 700; margin-top: 6px; }
+.grade.pass { color: var(--good); }
+.grade.fail { color: var(--bad); }
+.exam-info { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.timer { font-variant-numeric: tabular-nums; font-weight: 700; }
+.best { font-size: .85rem; color: var(--muted); }
+@media (max-width: 600px) { .fig-grid { grid-template-columns: 1fr 1fr; gap: 6px; } }
+.fig-cell .graph svg text { font-size: 24px; }
+.qfig .graph svg text { font-size: 15px; }

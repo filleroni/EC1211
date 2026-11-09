@@ -89,6 +89,8 @@
 
   function clipPath(svg, id) {
     const defs = el("defs", {}, svg);
+    const mk = el("marker", { id: id + "-arrow", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, defs);
+    el("path", { d: "M0,0 L10,5 L0,10 z", style: "fill: var(--ink)" }, mk);
     const cp = el("clipPath", { id }, defs);
     el("rect", { x: M.l, y: M.t, width: W - M.l - M.r, height: H - M.t - M.b }, cp);
   }
@@ -173,6 +175,7 @@
         // label near right end (or top for vertical lines)
         let lx, ly;
         if (c.xf) { lx = c.xf(...vals(state), 0); ly = spec.y[1] - (spec.y[1] - spec.y[0]) * .1; }
+        else if (c.labelAt != null) { lx = c.labelAt; ly = evalAt(c, lx, state); }
         else {
           const hi = c.domain ? Math.min(c.domain[1], spec.x[1]) : spec.x[1];
           for (let k = 0; k <= 60; k++) {
@@ -196,10 +199,18 @@
         if (!p) return;
         if (pt.guides !== false) {
           el("line", { x1: sx(p.x), x2: sx(p.x), y1: sy(p.y), y2: sy(spec.y[0]), class: "guide" }, plot);
-          el("line", { x1: sx(spec.x[0]), x2: sx(p.x), y1: sy(p.y), y2: sy(p.y), class: "guide" }, plot);
+          if (pt.guides !== "v") el("line", { x1: sx(spec.x[0]), x2: sx(p.x), y1: sy(p.y), y2: sy(p.y), class: "guide" }, plot);
         }
-        el("circle", { cx: sx(p.x), cy: sy(p.y), r: 6, fill: "var(--ink)", class: "eq-dot" }, plot);
-        el("text", { x: sx(p.x) + 9, y: sy(p.y) + 16, "font-weight": 700 }, plot).textContent = pt.label;
+        if (pt.dot !== false) el("circle", { cx: sx(p.x), cy: sy(p.y), r: 6, fill: "var(--ink)", class: "eq-dot" }, plot);
+        if (pt.showLabel !== false) el("text", { x: sx(p.x) + 9, y: sy(p.y) + 16, "font-weight": 700 }, plot).textContent = pt.label;
+        if (pt.xMark) el("text", { x: sx(p.x), y: H - M.b + 18, "text-anchor": "middle", "font-weight": 700 }, svg).textContent = pt.xMark;
+      });
+      (spec.arrows || []).forEach(a => {
+        el("line", { x1: sx(a.from[0]), y1: sy(a.from[1]), x2: sx(a.to[0]), y2: sy(a.to[1]), stroke: "var(--ink)",
+          "stroke-width": 1.8, "marker-end": `url(#${clipId}-arrow)` }, svg);
+      });
+      (spec.texts || []).forEach(t => {
+        el("text", { x: sx(t.at[0]), y: sy(t.at[1]), "font-weight": 700, "text-anchor": t.anchor || "middle" }, svg).textContent = t.text;
       });
       if (spec.readout) {
         readout.textContent = spec.readout.replace(/\{([^}]+)\}/g, (_, key) => {

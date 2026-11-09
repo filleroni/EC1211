@@ -6,4 +6,5 @@ window.LECTURE_FILES = [
   "kapitel-04.js",
   "kapitel-05.js",
   "kapitel-06.js",
+  "kapitel-07.js",
 ];

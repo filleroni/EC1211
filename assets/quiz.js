@@ -41,7 +41,21 @@
       if (opts.showSource && q._source) head.append(h("span", null, q._source));
       else if (q.topic) head.append(h("span", null, q.topic));
       card.appendChild(head);
-      card.appendChild(rich(h("div", "qtext"), q.q));
+      const qt = h("div", "qtext"); qt.innerHTML = window.md ? window.md(q.q) : q.q; card.appendChild(qt);
+      if (q.figure && window.renderGraph) {
+        const fw = h("div", "qfig"); card.appendChild(fw); window.renderGraph(fw, q.figure);
+      }
+      if (q.optionFigures && window.renderGraph) {
+        const grid = h("div", "fig-grid");
+        q.optionFigures.forEach((spec, k) => {
+          const cell = h("div", "fig-cell");
+          cell.appendChild(h("div", "fig-letter", String.fromCharCode(97 + k) + ")"));
+          window.renderGraph(cell, spec);
+          grid.appendChild(cell);
+        });
+        card.appendChild(grid);
+        if (!q.options) q.options = q.optionFigures.map((_, k) => "Figur " + String.fromCharCode(97 + k));
+      }
       const fb = h("div");
       const st = { correct: null };
       checkers.push(st);
@@ -82,7 +96,7 @@
         if (mode === "exam") inp.addEventListener("input", () => { answers[i] = inp.value.trim() || null; updateProgress(); });
       } else {
         const btns = q.options.map((o, k) => {
-          const b = rich(h("button", "opt"), o);
+          const b = rich(h("button", "opt"), opts.letters ? String.fromCharCode(97 + k) + ") " + o : o);
           b.addEventListener("click", () => {
             answers[i] = k;
             if (mode === "practice") st.check();
@@ -122,6 +136,12 @@
         result.innerHTML = "";
         const card = h("div", "card");
         card.append(h("div", "score", `${right} / ${questions.length} rätt (${pct} %)`));
+        if (opts.passMark != null) {
+          const pass = right >= opts.passMark;
+          const g = h("div", "grade " + (pass ? "pass" : "fail"), pass ? "Betyg: G (godkänd)" : "Betyg: U (underkänd)");
+          card.append(g, h("p", "muted", `Gränsen för godkänt är ${opts.passMark} rätt av ${questions.length}.`));
+        }
+        if (opts.onSubmit) opts.onSubmit(right);
         const wrong = questions.map((q, i) => ({ q, ok: checkers[i].correct })).filter(x => !x.ok);
         const bySrc = {};
         wrong.forEach(x => { const k = x.q._source || x.q.topic || "Övrigt"; bySrc[k] = (bySrc[k] || 0) + 1; });
