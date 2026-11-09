@@ -30,14 +30,14 @@
       const done = answers.filter(a => a !== null).length;
       if (mode === "practice") {
         const right = checkers.filter(c => c.correct === true).length;
-        progress.textContent = `${done}/${questions.length} answered · ${right} correct`;
-      } else progress.textContent = `${done}/${questions.length} answered`;
+        progress.textContent = `${done}/${questions.length} besvarade · ${right} rätt`;
+      } else progress.textContent = `${done}/${questions.length} besvarade`;
     }
 
     questions.forEach((q, i) => {
       const card = h("div", "card quiz-q");
       const head = h("div", "qhead");
-      head.append(h("span", null, `Question ${i + 1} of ${questions.length}`));
+      head.append(h("span", null, `Fråga ${i + 1} av ${questions.length}`));
       if (opts.showSource && q._source) head.append(h("span", null, q._source));
       else if (q.topic) head.append(h("span", null, q.topic));
       card.appendChild(head);
@@ -50,8 +50,8 @@
         fb.innerHTML = "";
         const ex = h("div", "explain " + (ok ? "good" : "bad"));
         const blank = answers[i] === null;
-        ex.innerHTML = `<b>${ok ? "Correct." : blank ? "Not answered." : "Not quite."}</b> ` +
-          (ok ? "" : correctText ? `The answer is ${window.mdInline ? window.mdInline(correctText) : correctText}. ` : "") +
+        ex.innerHTML = `<b>${ok ? "Rätt!" : blank ? "Ej besvarad." : "Inte riktigt."}</b> ` +
+          (ok ? "" : correctText ? `Rätt svar: ${window.mdInline ? window.mdInline(correctText) : correctText}. ` : "") +
           (q.explain ? (window.mdInline ? window.mdInline(q.explain) : q.explain) : "");
         fb.appendChild(ex);
         window.typeset && window.typeset(fb);
@@ -60,8 +60,8 @@
       if (q.type === "numeric") {
         const row = h("div", "row");
         const inp = document.createElement("input");
-        Object.assign(inp, { type: "text", inputMode: "decimal", className: "num-input", placeholder: "Your answer" });
-        const btn = h("button", "ghost", mode === "practice" ? "Check" : "Save");
+        Object.assign(inp, { type: "text", inputMode: "decimal", className: "num-input", placeholder: "Ditt svar" });
+        const btn = h("button", "ghost", mode === "practice" ? "Kontrollera" : "Spara");
         row.append(inp, btn);
         card.appendChild(row);
         const tol = q.tolerance != null ? q.tolerance : Math.max(Math.abs(q.answer) * 0.01, 1e-6);
@@ -69,7 +69,7 @@
           const v = parseFloat(String(answers[i] ?? "").replace(",", "."));
           st.correct = isFinite(v) && Math.abs(v - q.answer) <= tol;
           inp.disabled = true; btn.disabled = true;
-          showFeedback(st.correct, String(q.answer));
+          showFeedback(st.correct, String(q.answer).replace(".", ",") + (q.unit ? " " + q.unit : ""));
         };
         const commit = () => {
           if (inp.value.trim() === "") return;
@@ -111,23 +111,23 @@
     const result = h("div");
     status.append(progress);
     if (mode === "exam") {
-      const submit = h("button", null, "Submit answers");
+      const submit = h("button", null, "Lämna in");
       submit.addEventListener("click", () => {
         const unanswered = answers.filter(a => a === null).length;
-        if (unanswered && !confirm(`${unanswered} question(s) unanswered. Submit anyway?`)) return;
+        if (unanswered && !confirm(`${unanswered} fråga/frågor obesvarade. Lämna in ändå?`)) return;
         checkers.forEach(c => c.check());
         submit.disabled = true;
         const right = checkers.filter(c => c.correct).length;
         const pct = Math.round(100 * right / questions.length);
         result.innerHTML = "";
         const card = h("div", "card");
-        card.append(h("div", "score", `${right} / ${questions.length} correct (${pct}%)`));
+        card.append(h("div", "score", `${right} / ${questions.length} rätt (${pct} %)`));
         const wrong = questions.map((q, i) => ({ q, ok: checkers[i].correct })).filter(x => !x.ok);
         const bySrc = {};
-        wrong.forEach(x => { const k = x.q._source || x.q.topic || "Other"; bySrc[k] = (bySrc[k] || 0) + 1; });
+        wrong.forEach(x => { const k = x.q._source || x.q.topic || "Övrigt"; bySrc[k] = (bySrc[k] || 0) + 1; });
         if (wrong.length) {
-          card.append(h("p", "muted", "Topics to review: " + Object.entries(bySrc).map(([k, v]) => `${k} (${v})`).join(", ")));
-        } else card.append(h("p", "muted", "Perfect score."));
+          card.append(h("p", "muted", "Repetera: " + Object.entries(bySrc).map(([k, v]) => `${k} (${v})`).join(", ")));
+        } else card.append(h("p", "muted", "Alla rätt!"));
         result.appendChild(card);
         updateProgress();
         result.scrollIntoView({ behavior: "smooth", block: "center" });

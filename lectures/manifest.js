@@ -1,4 +1,5 @@
-// List every lecture file here, in any order (they are sorted by their "number").
+// Lista alla föreläsningsfiler här (de sorteras efter "number").
 window.LECTURE_FILES = [
-  "example-is-lm.js",
+  "kapitel-01.js",
+  "kapitel-02.js",
 ];

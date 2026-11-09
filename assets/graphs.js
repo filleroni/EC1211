@@ -50,8 +50,9 @@
   function fmt(v) {
     if (!isFinite(v)) return "–";
     const a = Math.abs(v);
-    return a >= 1000 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2);
+    return (a >= 1000 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2)).replace(".", ",").replace("-", "−");
   }
+  function tfmt(t) { return Number.isInteger(t) ? String(t).replace("-", "−") : fmt(t); }
   function compile(expr, names) {
     try {
       // non-strict so `with(Math)` lets authors write pow(), sqrt(), exp() …
@@ -67,13 +68,13 @@
     const sy = v => H - M.b - (v - spec.y[0]) / (spec.y[1] - spec.y[0]) * (H - M.t - M.b);
     const g = el("g", {}, svg);
     if (spec.ticks !== false) {
-      niceTicks(spec.x[0], spec.x[1]).forEach(t => {
+      if (spec.ticks !== "y") niceTicks(spec.x[0], spec.x[1]).forEach(t => {
         el("line", { x1: sx(t), x2: sx(t), y1: M.t, y2: H - M.b, class: "gridline" }, g);
-        el("text", { x: sx(t), y: H - M.b + 18, "text-anchor": "middle" }, g).textContent = fmt(t);
+        el("text", { x: sx(t), y: H - M.b + 18, "text-anchor": "middle" }, g).textContent = tfmt(t);
       });
       niceTicks(spec.y[0], spec.y[1]).forEach(t => {
         el("line", { x1: M.l, x2: W - M.r, y1: sy(t), y2: sy(t), class: "gridline" }, g);
-        el("text", { x: M.l - 8, y: sy(t) + 4, "text-anchor": "end" }, g).textContent = fmt(t);
+        el("text", { x: M.l - 8, y: sy(t) + 4, "text-anchor": "end" }, g).textContent = tfmt(t);
       });
     }
     el("line", { x1: M.l, x2: W - M.r, y1: H - M.b, y2: H - M.b, class: "axis" }, g);
@@ -169,12 +170,12 @@
           "stroke-dasharray": c.dashed ? "7 5" : "none" }, plot);
         // label near right end (or top for vertical lines)
         let lx, ly;
-        if (c.xf) { lx = c.xf(...vals(state), 0); ly = spec.y[1] - (spec.y[1] - spec.y[0]) * .04; }
+        if (c.xf) { lx = c.xf(...vals(state), 0); ly = spec.y[1] - (spec.y[1] - spec.y[0]) * .1; }
         else {
           const hi = c.domain ? Math.min(c.domain[1], spec.x[1]) : spec.x[1];
           for (let k = 0; k <= 60; k++) {
             const x = hi - (hi - spec.x[0]) * k / 100, y = evalAt(c, x, state);
-            if (isFinite(y) && y >= spec.y[0] && y <= spec.y[1]) { lx = x; ly = y; break; }
+            if (isFinite(y) && y >= spec.y[0] && y <= spec.y[1] - (spec.y[1] - spec.y[0]) * .06) { lx = x; ly = y; break; }
           }
         }
         if (lx != null) el("text", { x: Math.min(sx(lx) + 6, W - M.r - 4), y: sy(ly) - 8, fill: c.color,
@@ -200,6 +201,9 @@
       });
       if (spec.readout) {
         readout.textContent = spec.readout.replace(/\{([^}]+)\}/g, (_, key) => {
+          if (key[0] === "=") { // computed value, e.g. {=1/(1-c1)}
+            try { return fmt(compile(key.slice(1), names)(...vals(state), 0)); } catch (e) { return "–"; }
+          }
           const [lab, axis] = key.split(".");
           if (found[lab] && axis) return fmt(found[lab][axis]);
           if (key in state) return fmt(state[key]);
@@ -225,7 +229,7 @@
         lab.append(top, inp);
         ctr.appendChild(lab);
       });
-      const reset = html("button", "ghost btn-reset", "Reset");
+      const reset = html("button", "ghost btn-reset", "Återställ");
       reset.addEventListener("click", () => {
         names.forEach(n => { state[n] = start[n]; inputs[n].inp.value = start[n]; inputs[n].val.textContent = fmt(start[n]); });
         draw();
@@ -248,7 +252,13 @@
     s.y = spec.y || [Math.min(0, Math.min(...ys) - pad(Math.min(...ys), Math.max(...ys))), Math.max(...ys) + pad(Math.min(...ys), Math.max(...ys))];
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": spec.title || "chart" });
     root.appendChild(svg);
+    if (spec.categories) s.ticks = "y";
     const { sx, sy } = frame(svg, s);
+    if (spec.categories) {
+      spec.categories.forEach((c, i) => {
+        el("text", { x: sx(i), y: H - M.b + 18, "text-anchor": "middle" }, svg).textContent = c;
+      });
+    }
     const n = spec.series.length;
     spec.series.forEach((ser, i) => {
       const color = ser.color || COLORS[i % COLORS.length];
@@ -285,7 +295,7 @@
       else renderCurves(root, spec);
     } catch (e) {
       console.error(e);
-      root.appendChild(html("p", "muted", "This graph could not be drawn: " + e.message));
+      root.appendChild(html("p", "muted", "Grafen kunde inte ritas: " + e.message));
     }
     if (spec.caption) {
       const cap = html("div", "graph-caption");

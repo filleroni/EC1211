@@ -26,11 +26,9 @@ A static website for lecture walkthroughs, interactive graphs and quizzes. It ru
 
 The lecture appears on the home page, and its questions become available in the quiz builder automatically.
 
-Delete `lectures/example-is-lm.js` and its manifest line when you no longer need the example.
-
 ## Lecture file format
 
-See `lectures/example-is-lm.js` for a full example. Outline:
+See `lectures/kapitel-02.js` for a full example. Outline:
 
 ```js
 registerLecture({
