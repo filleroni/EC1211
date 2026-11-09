@@ -229,5 +229,6 @@
   }
 
   window.addEventListener("hashchange", route);
-  window.addEventListener("load", async () => { await loadAll(); route(); });
+  async function start() { await loadAll(); app.dataset.ready = "1"; route(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();
