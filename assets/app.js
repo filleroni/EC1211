@@ -40,7 +40,7 @@
     });
   }
   async function loadAll() {
-    for (const f of window.LECTURE_FILES || []) await loadScript("lectures/" + f);
+    for (const f of window.LECTURE_FILES || []) await loadScript("lectures/" + f + (window.CACHE_BUST || ""));
     LECTURES.sort((a, b) => (a.number ?? 999) - (b.number ?? 999));
     LECTURES.forEach((l, i) => { if (!l.id) l.id = "lecture-" + (i + 1); });
   }

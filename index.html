@@ -28,9 +28,15 @@
   <script src="assets/vendor/marked.min.js"></script>
   <script src="assets/vendor/katex.min.js"></script>
   <script src="assets/vendor/auto-render.min.js"></script>
-  <script src="lectures/manifest.js"></script>
-  <script src="assets/graphs.js"></script>
-  <script src="assets/quiz.js"></script>
-  <script src="assets/app.js"></script>
+  <script>
+    // Hämta alltid färska versioner (GitHub Pages cachar annars filerna i upp till 10 minuter).
+    window.CACHE_BUST = "?v=" + Date.now();
+    ["lectures/manifest.js", "assets/graphs.js", "assets/quiz.js", "assets/app.js"].forEach(function (src) {
+      var s = document.createElement("script");
+      s.src = src + window.CACHE_BUST;
+      s.async = false; // behåll ordningen
+      document.body.appendChild(s);
+    });
+  </script>
 </body>
 </html>
