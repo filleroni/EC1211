@@ -116,3 +116,22 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 @media (max-width: 600px) { .fig-grid { grid-template-columns: 1fr 1fr; gap: 6px; } }
 .fig-cell .graph svg text { font-size: 24px; }
 .qfig .graph svg text { font-size: 15px; }
+
+/* begrepp & formler */
+.drill-tabs { margin: 4px 0 18px; }
+.drill-checks { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.drill-checks label { display: inline-flex; gap: 4px; align-items: center; }
+.card h3:first-child { margin-top: 0; }
+.drill-detail { padding: 10px 14px; background: var(--bg); border-radius: 8px; margin-bottom: 10px; }
+.drill-row { flex-wrap: nowrap; }
+.drill-input { flex: 1; min-width: 0; width: auto; font-family: ui-monospace, Menlo, Consolas, monospace; }
+.drill-lhs { white-space: nowrap; }
+.drill-legend { font-size: .82rem; color: var(--muted); margin-top: 8px; line-height: 1.7; }
+.drill-preview { margin-top: 8px; min-height: 1.4em; }
+.drill-status { position: sticky; top: 58px; z-index: 5; padding: 10px 18px; }
+.drill-status .score { font-size: 1rem; }
+.drill-table { border-collapse: collapse; width: 100%; }
+.drill-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.drill-table tr:last-child td { border-bottom: none; }
+.drill-table td:first-child { width: 42%; }
+@media (max-width: 600px) { .drill-row { flex-wrap: wrap; } .topbar nav a { margin-left: 8px; font-size: .9rem; } }

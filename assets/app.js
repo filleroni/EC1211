@@ -105,8 +105,8 @@
     toc.append(h("b", null, "Innehåll"));
     const ol = h("ol");
     sections.forEach(s => { const li = h("li"); const a = h("a", null, s.heading); a.href = "#/lecture/" + l.id + "/" + slug(s.heading); li.append(a); ol.append(li); });
-    if (l.keyTerms) { const li = h("li"); const a = h("a", null, "Nyckelbegrepp"); a.href = "#/lecture/" + l.id + "/key-terms"; li.append(a); ol.append(li); }
-    if (l.quiz && l.quiz.length) { const li = h("li"); const a = h("a", null, "Övningsfrågor"); a.href = "#/lecture/" + l.id + "/practice-questions"; li.append(a); ol.append(li); }
+    if (l.keyTerms) { const li = h("li"); const a = h("a", null, "Nyckelbegrepp"); a.href = "#/lecture/" + l.id + "/nyckelbegrepp"; li.append(a); ol.append(li); }
+    if (l.quiz && l.quiz.length) { const li = h("li"); const a = h("a", null, "Övningsfrågor"); a.href = "#/lecture/" + l.id + "/ovningsfragor"; li.append(a); ol.append(li); }
     toc.append(ol);
     app.append(toc);
 
@@ -326,6 +326,7 @@
     app.dataset.lec = "";
     if (parts[0] === "quiz") builder();
     else if (parts[0] === "duggor") duggaList();
+    else if (parts[0] === "begrepp") window.renderDrillPage(app, LECTURES, parts[1] || "ova");
     else if (parts[0] === "dugga" && parts[1] && parts[2]) duggaExam(parts[1], parts[2]);
     else home();
     window.scrollTo(0, 0);

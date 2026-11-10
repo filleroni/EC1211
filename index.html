@@ -13,6 +13,7 @@
     <nav>
       <a href="#/">Föreläsningar</a>
       <a href="#/quiz">Skapa quiz</a>
+      <a href="#/begrepp">Begrepp & formler</a>
       <a href="#/duggor">Duggor</a>
     </nav>
   </header>
@@ -32,7 +33,7 @@
   <script>
     // Hämta alltid färska versioner (GitHub Pages cachar annars filerna i upp till 10 minuter).
     window.CACHE_BUST = "?v=" + Date.now();
-    ["lectures/manifest.js", "assets/graphs.js", "assets/quiz.js", "assets/app.js"].forEach(function (src) {
+    ["lectures/manifest.js", "assets/graphs.js", "assets/quiz.js", "assets/drill.js", "assets/app.js"].forEach(function (src) {
       var s = document.createElement("script");
       s.src = src + window.CACHE_BUST;
       s.async = false; // behåll ordningen
