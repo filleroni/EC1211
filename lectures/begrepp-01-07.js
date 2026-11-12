@@ -48,6 +48,8 @@ registerDrill({
     eps: { tex: "\\varepsilon", aliases: ["ε", "ϵ", "eps", "epsilon"], meaning: "real växelkurs" },
     Sp: { tex: "S", aliases: ["S", "Sp", "S_p"], meaning: "privat sparande" },
     gr: { tex: "g", aliases: ["g", "x"], meaning: "tillväxttakt i procent per år" },
+    tau: { tex: "\\tau", aliases: ["τ", "tau", "t"], meaning: "egen tullsats på importen" },
+    taus: { tex: "\\tau^*", aliases: ["τ^*", "τ*", "tau*", "tau^*", "taustar", "t*"], meaning: "utländsk tullsats på vår export" },
   },
 
   symbols: [
@@ -91,6 +93,8 @@ registerDrill({
     { ch: 7, tex: "Y^*", meaning: "Utländsk inkomst", aliases: ["Y^*", "Y*"] },
     { ch: 7, tex: "Y_{TB}", meaning: "Produktionsnivån där handelsbalansen är noll", aliases: ["Y_TB", "YTB", "Y_{TB}"] },
     { ch: 7, tex: "CA", meaning: "Bytesbalansen", aliases: ["CA"] },
+    { ch: 7, tex: "\\tau^*", meaning: "Utländsk tullsats på vår export", aliases: ["τ*", "τ^*", "tau*", "tau^*"] },
+    { ch: 7, tex: "\\tau", meaning: "Egen tullsats på importen (motåtgärd)", aliases: ["τ", "tau"] },
   ],
 
   formulas: [
@@ -187,6 +191,10 @@ registerDrill({
       wrong: ["NX - NI", "NX", "X + IM + NI"] },
     { ch: 7, name: "Sparande, investeringar och bytesbalans", lhs: "CA =", tex: "S + (T - G) - I", expr: "Sp + T - G - I", vars: ["Sp", "T", "G", "I"],
       wrong: ["S + (T - G) + I", "S - (T - G) - I", "I - S"] },
+    { ch: 7, name: "Exportens relativpris när utlandet inför tull", lhs: "\\text{relativpris för exporten} =", tex: "\\varepsilon\\,(1 + \\tau^*)", expr: "eps*(1 + taus)", vars: ["eps", "taus"],
+      wrong: ["\\frac{\\varepsilon}{1 + \\tau^*}", "\\varepsilon + \\tau^*", "\\varepsilon\\,(1 - \\tau^*)"] },
+    { ch: 7, name: "Importens relativpris när vi inför tull", lhs: "\\text{relativpris för importen} =", tex: "\\frac{\\varepsilon}{1 + \\tau}", expr: "eps/(1 + tau)", vars: ["eps", "tau"],
+      wrong: ["\\varepsilon\\,(1 + \\tau)", "\\varepsilon - \\tau", "\\frac{1 + \\tau}{\\varepsilon}"] },
     { ch: 7, name: "Nettoexportens beroenden", lhs: "NX =", tex: "NX(\\underset{-}{Y}, \\underset{+}{Y^*}, \\underset{-}{\\varepsilon})", write: false,
       wrong: ["NX(\\underset{+}{Y}, \\underset{-}{Y^*}, \\underset{-}{\\varepsilon})", "NX(\\underset{-}{Y}, \\underset{+}{Y^*}, \\underset{+}{\\varepsilon})", "NX(\\underset{+}{Y}, \\underset{+}{Y^*}, \\underset{+}{\\varepsilon})"] },
   ],

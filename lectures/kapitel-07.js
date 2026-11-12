@@ -190,6 +190,93 @@ $$\\underbrace{(Y + NI - T - C)}_{\\text{privat sparande}} + \\underbrace{(T - G
 **Privat plus offentligt sparande minus investeringarna är lika med bytesbalansen.** Ett land som sparar mer än det investerar har överskott i bytesbalansen och lånar ut till omvärlden. Det gäller t.ex. Sverige.`,
     },
     {
+      heading: "Tullar: när ett annat land inför tullar",
+      body: `Om ett annat land inför **tullar** blir våra exportprodukter dyrare för köparna där. Vi kan fånga det som att **den reala växelkursen för exporten stiger**. I exportuttrycket multipliceras den reala växelkursen med $(1 + \\tau^*)$, där $\\tau^*$ är den utländska tullsatsen:
+$$Y = C(Y - T) + I(Y, i) + G - \\frac{IM(Y, \\varepsilon)}{\\varepsilon} + X\\big(Y^*,\; \\varepsilon\\,(1 + \\tau^*)\\big)$$
+
+- Exporten minskar, och därmed **förskjuts ZZ nedåt**. DD påverkas inte.
+- **Y minskar** till Y′.
+- **$Y_{TB}$ minskar mer**, så **handelsbalansen försämras**.
+
+Effekten liknar alltså en real appreciering, men den gäller bara exporten.`,
+      graphs: [
+        {
+          type: "curves",
+          title: "Tullar och motåtgärder i 45°-diagrammet",
+          xLabel: "Produktion/inkomst, Y", yLabel: "Efterfrågan",
+          x: [0, 3000], y: [0, 3000],
+          params: {
+            taus: { label: "Utländsk tull på vår export τ* (%)", min: 0, max: 40, step: 1, value: 0 },
+            tau: { label: "Vår tull på importen τ (%)", min: 0, max: 40, step: 1, value: 0 },
+          },
+          curves: [
+            { label: "DD", fn: "120 + 0.7*x + 400" },
+            { label: "ZZ", fn: "520 + 0.7*x + 400 - 0.2*x - 150*((1 + taus/100) - 1) - 150*(1/(1 + tau/100) - 1)", ghost: true },
+            { label: "45°", fn: "x", dashed: true, color: "var(--muted)" },
+          ],
+          points: [
+            { between: ["ZZ", "45°"], label: "A" },
+            { between: ["ZZ", "DD"], label: "TB", guides: false },
+          ],
+          readout: "Y = {A.x} · Y_TB = {TB.x} · export X = {=400 - 150*(taus/100)} · import IM/ε = {=0.2*((520 + 400 - 150*(taus/100) - 150*(1/(1+tau/100) - 1))/0.5) + 150*(1/(1+tau/100) - 1)} · NX = {=400 - 150*(taus/100) - (0.2*((520 + 400 - 150*(taus/100) - 150*(1/(1+tau/100) - 1))/0.5) + 150*(1/(1+tau/100) - 1))}",
+          caption: "Här är $\\varepsilon = 1$, $Y^* = 4000$ och $G = 400$. Exporten är $X = 400 - 150\\,(\\varepsilon(1+\\tau^*) - 1)$ och importen $IM/\\varepsilon = 0{,}2Y + 150\\,(\\varepsilon/(1+\\tau) - 1)$. **Prova:** sätt τ* till 20 %. Y faller från 1 840 till 1 780, och Y_TB faller ännu mer, från 2 000 till 1 850. Sätt sedan τ till 25 %. Då är Y och Y_TB tillbaka där de började, men både exporten och importen är lägre än från början.",
+        },
+      ],
+    },
+    {
+      heading: "Motåtgärder",
+      body: `Om det inhemska landet svarar med att självt införa en tull med tullsatsen $\\tau$ på **importen** kommer den in i importuttrycket:
+$$Y = C(Y - T) + I(Y, i) + G - \\frac{IM\\big(Y, \\varepsilon/(1 + \\tau)\\big)}{\\varepsilon} + X\\big(Y^*,\; \\varepsilon\\,(1 + \\tau^*)\\big)$$
+
+- Tullen gör importen dyrare, så **importen minskar**. Det **ökar nettoexporten**.
+- **ZZ förskjuts därmed tillbaka** uppåt.
+
+### Är allt detsamma?
+ZZ har förskjutits tillbaka, och Y och handelsbalansen kan bli som innan. **Men allt är inte detsamma:**
+- **Både exporten och importen är lägre** än innan tullarna.
+- Handeln orsakas rimligen av **komparativa fördelar**, och de kan inte längre utnyttjas fullt ut till allas bästa.
+- **BNP blir lägre för alla**, men den effekten ligger utanför vår modell, där produktionen bara bestäms av efterfrågan.`,
+    },
+    {
+      heading: "Pass-through",
+      body: `I exportuttrycket ser vi att en högre tull i importlandet ökar $\\varepsilon\\,(1 + \\tau^*)$, vilket minskar exporten. Exportminskningen kan uppstå **på två sätt**:
+
+- **Antingen** stiger priserna inklusive tull i importlandet, så att konsumenterna där köper mindre,
+- **eller** sänker exportörerna sina priser. Men då blir det mindre lönsamt att exportera, så exporten minskar ändå.
+
+Hur mycket priserna stiger i importlandet kallas **pass-through** (genomslag). Om den är **100 %** stiger priserna ett-till-ett med tullen.
+
+**Varför spelar det roll?** Pass-through avgör **vem som drabbas mest** av tullen. Vid 100 % pass-through stiger priserna i det land som inför tullen. Det blir inflation, och **landet som inför tullen drabbas mest**.
+
+### USA och Kina
+- Modern forskning visar att de amerikanska tullarna mot Kina hade nästan **100 % pass-through**. De amerikanska konsumenterna fick alltså betala.
+- Kinas motåtgärder hade mycket **lägre pass-through**. Amerikanska exportörer fick sänka sina priser och fick därmed mindre betalt.
+- **USA skjuter sig alltså själv i båda fötterna.** Importen blir dyrare för konsumenterna, och exportörerna får sämre betalt. Dessutom kan varken USA eller omvärlden fullt ut utnyttja sina komparativa fördelar.
+
+Föreläsningen visar också USA:s importprisindex *exklusive* tullar (FRED). Importpriserna steg kraftigt 2021–2022, planade sedan ut och har stigit igen under 2025–2026. Om utländska exportörer hade tagit tullkostnaden genom att sänka sina priser skulle det här indexet ha fallit, men det har det inte gjort.`,
+    },
+    {
+      heading: "USA:s handels- och bytesbalans",
+      body: `Föreläsningen visar amerikansk data från FRED (U.S. Census Bureau och Bureau of Economic Analysis):
+
+- **Handelsbalansen för varor** har länge haft ett stort underskott. Underskottet växte efter 2020. Kring årsskiftet 2024/2025 blev det rekordstort, när importen tidigarelades inför de aviserade tullarna. Därefter har det svängt kraftigt.
+- **Handelsbalansen för tjänster** visar ett överskott.
+- **Bytesbalansen** har varit negativ under hela perioden sedan 2000. Den har försämrats tydligt efter 2020, och underskottet var som störst i början av 2025.
+
+USA:s bytesbalans har alltså **otvetydigt försämrats** under senare år, och USA:s tillgångar i omvärlden växer långsammare än skulderna.
+
+### Bytesbalansidentiteten
+Kom ihåg nationalinkomstidentiteten från tidigare i kapitlet:
+$$(Y + NI - T - C) + (T - G) - I = NX + NI$$
+**Privat sparande + offentligt sparande − investeringar = bytesbalansen** (handelsbalansen plus nettofaktorinkomster).
+
+- NX har länge varit negativ, och på senare tid har även NI fallit, men den har delvis återhämtat sig.
+- I vänsterledet är det **offentliga sparandet i USA katastrofalt lågt**, och det privata sparandet är också lågt i ett internationellt perspektiv.
+- Det är nog **vänsterledet USA behöver göra något åt**: det privata sparandet behöver öka och de enorma offentliga underskotten behöver minska. Då ordnar sig nog handelsbalansen.
+- **Skattesänkningar och tullar gör inte saken bättre.** Skattesänkningar minskar det offentliga sparandet. Tullar ändrar inte sparandet och investeringarna, men minskar både exporten och importen.`,
+      takeaway: "Bytesbalansen bestäms i grunden av sparande och investeringar. Tullar kan inte lösa ett bytesbalansunderskott som beror på för lågt sparande.",
+    },
+    {
       heading: "Lite doktrinhistoria: komparativa fördelar",
       body: `**David Ricardo** (1772–1823) visade att vilka varor ett land exporterar beror på **komparativa fördelar**. Handel kan vara värdefull även om ett land är **mindre produktivt i båda varorna**. Det som krävs är att den **relativa** produktiviteten skiljer sig mellan länderna.
 
@@ -245,6 +332,9 @@ Två länder, A och B, har 100 enheter arbetskraft var.
     { term: "Komparativ fördel", def: "Lägre relativ alternativkostnad för att producera en vara." },
     { term: "Pareto-förbättring", def: "Minst en individ får det bättre utan att någon får det sämre." },
     { term: "Heckscher–Ohlin", def: "Komparativa fördelar beror på skillnader i tillgången till produktionsfaktorer." },
+    { term: "Tull", def: "En avgift på importerade varor. En utländsk tull $\\tau^*$ verkar som en högre real växelkurs för vår export: $\\varepsilon(1+\\tau^*)$." },
+    { term: "Motåtgärd", def: "En egen tull $\\tau$ på importen, som svar på andra länders tullar. Den minskar importen: $IM(Y, \\varepsilon/(1+\\tau))$." },
+    { term: "Pass-through", def: "Hur mycket priserna i importlandet stiger när en tull införs. Vid 100 % stiger de ett-till-ett med tullen." },
   ],
 
   quiz: [
@@ -444,6 +534,90 @@ Två länder, A och B, har 100 enheter arbetskraft var.
       answer: 1,
       explain: "Ett land med mycket högutbildad arbetskraft har komparativ fördel i varor som kräver sådan arbetskraft.",
       topic: "Lite doktrinhistoria: komparativa fördelar",
+    },
+    {
+      q: "Ett annat land inför tullar på svensk export. Vad händer i 45°-diagrammet för Sverige?",
+      options: [
+        "DD och ZZ flyttas lika mycket nedåt. Y minskar och Y_TB är oförändrad",
+        "ZZ flyttas nedåt (men inte DD). Y minskar, Y_TB minskar mer och handelsbalansen försämras",
+        "ZZ flyttas uppåt. Y ökar och handelsbalansen förbättras",
+        "Ingenting, eftersom tullen betalas av utländska konsumenter",
+      ],
+      answer: 1,
+      explain: "Tullen verkar som en högre real växelkurs för exporten, $\\varepsilon(1+\\tau^*)$. Exporten minskar, vilket bara påverkar ZZ.",
+      topic: "Tullar: när ett annat land inför tullar",
+    },
+    {
+      q: "Hur kommer den utländska tullsatsen $\\tau^*$ in i modellen?",
+      options: [
+        "Som $X(Y^*, \\varepsilon(1+\\tau^*))$, dvs. som en högre real växelkurs för exporten",
+        "Som $X(Y^*(1+\\tau^*), \\varepsilon)$, dvs. som högre utländsk inkomst",
+        "Som en högre skatt T i Sverige",
+        "Som $IM(Y, \\varepsilon(1+\\tau^*))$",
+      ],
+      answer: 0,
+      explain: "Våra varor blir dyrare för de utländska köparna, precis som om den reala växelkursen hade stigit, men bara för exporten.",
+      topic: "Tullar: när ett annat land inför tullar",
+    },
+    {
+      q: "Sverige svarar med en egen tull på importen (en motåtgärd). Vad händer?",
+      options: [
+        "Importen ökar och ZZ flyttas nedåt ytterligare",
+        "Importen minskar, nettoexporten ökar och ZZ flyttas tillbaka uppåt",
+        "Bara DD påverkas",
+        "Exporten ökar till den nivå den hade innan",
+      ],
+      answer: 1,
+      explain: "Importtullen gör importen dyrare: $IM(Y, \\varepsilon/(1+\\tau))$ minskar. Exporten förblir dock lägre än innan.",
+      topic: "Motåtgärder",
+    },
+    {
+      q: "Efter motåtgärden har ZZ flyttats tillbaka till sitt ursprungliga läge. Är allt som innan?",
+      options: [
+        "Ja, Y, export och import är som innan tullarna",
+        "Nej, både exporten och importen är lägre, och de komparativa fördelarna kan inte utnyttjas fullt ut, så BNP blir lägre för alla (utanför modellen)",
+        "Nej, Y är permanent högre",
+        "Nej, handelsbalansen är permanent i överskott",
+      ],
+      answer: 1,
+      explain: "Y och NX kan bli desamma i modellen, men handelsvolymen är mindre och vinsterna från specialisering går förlorade.",
+      topic: "Motåtgärder",
+    },
+    {
+      q: "Vad menas med att en tull har 100 % pass-through?",
+      options: [
+        "Att exportörerna sänker sina priser lika mycket som tullen",
+        "Att priserna i importlandet stiger ett-till-ett med tullen, så att konsumenterna i landet som inför tullen betalar den",
+        "Att tullen inte påverkar handeln",
+        "Att hela tullen går tillbaka till exportlandet",
+      ],
+      answer: 1,
+      explain: "Med 100 % pass-through drabbas framför allt landet som inför tullen, genom högre priser och inflation.",
+      topic: "Pass-through",
+    },
+    {
+      q: "Vad visade forskningen om de amerikanska tullarna mot Kina och Kinas motåtgärder?",
+      options: [
+        "Båda hade nära 0 % pass-through",
+        "USA:s tullar hade nära 100 % pass-through (amerikanska konsumenter betalade), medan Kinas motåtgärder hade låg pass-through (amerikanska exportörer fick sänka sina priser)",
+        "Kinesiska exportörer betalade hela USA:s tull",
+        "Tullarna förbättrade USA:s bytesbalans kraftigt",
+      ],
+      answer: 1,
+      explain: "USA ”skjuter sig själv i båda fötterna”: dyrare import för konsumenterna och sämre betalt för exportörerna.",
+      topic: "Pass-through",
+    },
+    {
+      q: "Enligt bytesbalansidentiteten, vad behöver USA främst göra för att förbättra sin bytesbalans?",
+      options: [
+        "Införa högre tullar",
+        "Sänka skatterna",
+        "Öka det privata sparandet och minska de offentliga underskotten",
+        "Öka investeringarna",
+      ],
+      answer: 2,
+      explain: "$S + (T - G) - I = NX + NI$. Tullar ändrar inte sparandet, och skattesänkningar minskar det offentliga sparandet.",
+      topic: "USA:s handels- och bytesbalans",
     },
   ],
 });
