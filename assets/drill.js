@@ -47,6 +47,10 @@
     let i = 0;
     while (i < src.length) {
       const ch = src[i];
+      if (src.startsWith("sqrt", i) || src.startsWith("rot", i) || ch === "√") {
+        const len = ch === "√" ? 1 : src.startsWith("sqrt", i) ? 4 : 3;
+        out.push({ t: "sqrt" }); i += len; continue;
+      }
       const hit = aliases.find(al => src.startsWith(al.a, i));
       if (hit) { out.push({ t: "var", k: hit.k }); i += hit.a.length; continue; }
       const num = /^\d+(\.\d+)?|^\.\d+/.exec(src.slice(i));
@@ -62,7 +66,7 @@
   function parse(tokens) {
     let p = 0;
     const peek = () => tokens[p], take = () => tokens[p++];
-    const startsAtom = t => t && (t.t === "num" || t.t === "var" || t.t === "(");
+    const startsAtom = t => t && (t.t === "num" || t.t === "var" || t.t === "(" || t.t === "sqrt");
     function expr() {
       let a = term();
       while (peek() && (peek().t === "+" || peek().t === "-")) { const op = take().t; a = { t: "bin", op, a, b: term() }; }
@@ -90,6 +94,7 @@
       const t = take();
       if (!t) throw new Error("Uttrycket tar slut för tidigt.");
       if (t.t === "num") return { t: "num", v: t.v };
+      if (t.t === "sqrt") return { t: "sqrt", a: power() };
       if (t.t === "var") return { t: "var", k: t.k };
       if (t.t === "(") {
         const e = expr();
@@ -110,6 +115,7 @@
       case "num": return n.v;
       case "var": return env[n.k];
       case "par": return evaluate(n.a, env);
+      case "sqrt": return Math.sqrt(evaluate(n.a, env));
       case "neg": return -evaluate(n.a, env);
       case "bin": {
         const a = evaluate(n.a, env), b = evaluate(n.b, env);
@@ -123,6 +129,7 @@
       case "num": return String(n.v).replace(".", "{,}");
       case "var": return DRILL.vars[n.k] ? DRILL.vars[n.k].tex : n.k;
       case "par": return `\\left(${toTex(n.a)}\\right)`;
+      case "sqrt": return `\\sqrt{${toTex(n.a.t === "par" ? n.a.a : n.a)}}`;
       case "neg": return `-${toTex(n.a)}`;
       case "bin": {
         const strip = x => (x.t === "par" ? x.a : x);
@@ -229,7 +236,7 @@
     const card = h("div", "card quiz-q drill-q");
     const head = h("div", "qhead");
     const catName = { begrepp: "Begrepp", symboler: "Symbol", formler: "Formel" }[q.item.cat];
-    head.append(h("span", null, `Fråga ${idx + 1} av ${total}`), h("span", null, `${catName} · Kapitel ${q.item.ch}`));
+    head.append(h("span", null, `Fråga ${idx + 1} av ${total}`), h("span", null, `${catName} · Föreläsning ${q.item.ch}`));
     card.append(head);
     const qt = h("div", "qtext"); qt.innerHTML = mdi(q.prompt); card.append(qt);
     if (q.detail) { const d = h("div", "drill-detail"); d.innerHTML = mdi(q.detail); card.append(d); }
@@ -280,7 +287,7 @@
           const v = DRILL.vars[k];
           const shown = v.aliases.find(a => /^[\x20-\x7e]+$/.test(a)) || v.aliases[0];
           return `<code>${shown}</code> = ${tex(v.tex)} (${v.meaning})`;
-        }).join(" · ") + ". Skriv * för gånger (eller bara skriv tecknen efter varandra), / för division och ^ för potens.";
+        }).join(" · ") + ". Skriv * för gånger (eller bara skriv tecknen efter varandra), / för division, ^ för potens och sqrt(…) för kvadratrot.";
         card.append(legend);
         preview = h("div", "drill-preview muted");
         card.append(preview);
@@ -345,7 +352,7 @@
     if (tab === "begrepp") return termList(app, lecs);
 
     const card = h("div", "card");
-    card.append(h("h3", null, "Kapitel"));
+    card.append(h("h3", null, "Föreläsningar"));
     const chBox = h("div", "drill-checks");
     const chInputs = lecs.map(l => {
       const lab = h("label"); const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true;

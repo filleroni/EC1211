@@ -12,5 +12,8 @@ window.LECTURE_FILES = [
   "kapitel-09.js",
   "kapitel-10.js",
   "kapitel-11.js",
+  "kapitel-13.js",
+  "kapitel-14.js",
+  "kapitel-15.js",
   "begrepp-08-14.js",
 ];

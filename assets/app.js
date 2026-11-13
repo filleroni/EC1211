@@ -269,7 +269,7 @@
       if (!ex) { app.innerHTML = "<p>Duggan hittades inte.</p>"; return; }
       title = ex.title; questions = ex.questions;
     }
-    questions = questions.map(q => ({ ...q, topic: q.ch ? "Kapitel " + q.ch : q.topic }));
+    questions = questions.map(q => ({ ...q, topic: q.ch ? "Föreläsning " + q.ch : q.topic }));
     document.title = `${d.title}: ${title}`;
     app.innerHTML = "";
     const back = h("a", null, "← Alla övningsduggor"); back.href = "#/duggor";
