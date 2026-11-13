@@ -211,8 +211,8 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
       q: "Hur härleds Phillipskurvan i kursen?",
       options: [
         "Från IS- och LM-sambanden",
-        "Genom att sätta in lönesättningen $W = P^e F(u,z)$ i prissättningen $P = (1+m)W$",
-        "Från räntepariteten",
+        "Från löne- och prissättningen (WS och PS)",
+        "Från räntepariteten och växelkursen",
         "Från produktionsfunktionen Y = AN enbart",
       ],
       answer: 1,
@@ -248,10 +248,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Vad gäller i Phillipskurvan version 1.0 (πᵉ = 0) om arbetslösheten ligger fast under u_n?",
       options: [
-        "Inflationen ökar varje år",
-        "Inflationen är positiv men inte ökande: en stadig pris- och lönespiral",
-        "Inflationen är noll",
-        "Deflation",
+        "Inflationen ökar varje år så länge u < u_n",
+        "Inflationen är positiv och konstant",
+        "Inflationen är noll eftersom πᵉ = 0",
+        "Det blir deflation när u < u_n",
       ],
       answer: 1,
       explain: "Priserna blir varje år högre än förra året, men inflationstakten är konstant: $\\pi = m + z - \\alpha u$.",
@@ -272,10 +272,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Vad innebär θ = 1 i $\\pi^e_t = \\theta\\pi_{t-1}$?",
       options: [
-        "Att man förväntar sig noll inflation",
-        "Att man förväntar sig att inflationen blir lika med förra årets inflation",
-        "Att man förväntar sig att inflationen blir 2 %",
-        "Att förväntningarna saknar betydelse",
+        "Att man förväntar sig noll inflation varje år",
+        "Att man förväntar sig förra årets inflation",
+        "Att man förväntar sig inflationsmålet, 2 %",
+        "Att förväntningarna saknar betydelse för π",
       ],
       answer: 1,
       explain: "Då blir Phillipskurvan $\\pi_t - \\pi_{t-1} = m + z - \\alpha u_t$, den förväntningsutvidgade.",
@@ -284,10 +284,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "I den förväntningsutvidgade Phillipskurvan: vad händer om arbetslösheten ligger fast under u_n?",
       options: [
-        "Inflationen är konstant",
-        "Inflationen ökar år efter år (accelererar)",
-        "Inflationen faller",
-        "Arbetslösheten ökar automatiskt",
+        "Inflationen är konstant men positiv",
+        "Inflationen ökar år efter år",
+        "Inflationen faller tillbaka mot noll",
+        "Arbetslösheten stiger automatiskt till u_n",
       ],
       answer: 1,
       explain: "Det är förändringen i inflationen som beror på u: om u < u_n är $\\pi_t - \\pi_{t-1} > 0$.",
@@ -302,10 +302,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Varför liknar dagens Phillipskurva mer version 1.0 än version 2.0, enligt föreläsningen?",
       options: [
-        "För att arbetslösheten alltid ligger på u_n",
-        "För att centralbankernas trovärdiga inflationsmål har förankrat förväntningarna vid 2 %, så att πᵉ inte följer förra årets inflation",
-        "För att α har blivit noll",
-        "För att indexeringen av lönerna har ökat",
+        "För att arbetslösheten alltid ligger på u_n numera",
+        "För att förväntningarna är förankrade vid målet, 2 %",
+        "För att α har blivit noll sedan 1990-talet",
+        "För att indexeringen av lönerna har ökat kraftigt",
       ],
       answer: 1,
       explain: "Med $\\pi^e = 0{,}02$ blir kurvan $\\pi_t = 0{,}02 + m + z - \\alpha u_t$, som är stabilare.",
@@ -326,9 +326,9 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Vad menade Friedman och Phelps?",
       options: [
-        "Att man permanent kan sänka arbetslösheten genom att acceptera högre inflation",
-        "Att det inte finns någon stabil långsiktig avvägning mellan arbetslöshet och inflation, eftersom förväntningarna anpassas, så att arbetslösheten i genomsnitt blir u_n",
-        "Att inflationen bara beror på oljepriset",
+        "Att högre inflation permanent kan sänka arbetslösheten",
+        "Att ingen stabil långsiktig avvägning u–π finns",
+        "Att inflationen främst beror på oljepriset",
         "Att Phillipskurvan alltid är horisontell",
       ],
       answer: 1,
@@ -338,10 +338,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Varför blir Phillipskurvan nästan lodrät vid mycket hög inflation?",
       options: [
-        "För att arbetslösheten då alltid är noll",
-        "För att lönesättarna då gör noggranna prognoser och indexerar lönerna, så att förväntningarna snabbt anpassas",
-        "För att centralbanken slutar sätta räntan",
-        "För att α blir noll",
+        "För att arbetslösheten då alltid är nära noll",
+        "För att lönerna indexeras och förväntningar anpassas snabbt",
+        "För att centralbanken då slutar sätta räntan",
+        "För att α blir noll när inflationen är hög",
       ],
       answer: 1,
       explain: "Den kortsiktiga avvägningen mellan inflation och arbetslöshet försvinner nästan.",
@@ -357,10 +357,10 @@ Jämviktsarbetslösheten är därför **inte densamma i olika länder** och **in
     {
       q: "Vad gäller enligt Ricardo (och i vår modell på medellång sikt) om penningmängden M fördubblas?",
       options: [
-        "Real BNP fördubblas",
-        "Prisnivån fördubblas, så att M/P är oförändrat",
+        "Real BNP fördubblas på medellång sikt",
+        "Prisnivån fördubblas; M/P oförändrat",
         "Räntan halveras permanent",
-        "Inget",
+        "Reallönerna fördubblas",
       ],
       answer: 1,
       explain: "Prisnivån är proportionell mot penningmängden på medellång sikt.",

@@ -154,10 +154,10 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Varför är BNP per capita omräknat med marknadsväxelkurser missvisande för att jämföra levnadsstandard?",
       options: [
-        "För att växelkurserna svänger kraftigt och lokalt producerade tjänster är billigare i fattiga länder",
-        "För att BNP inte mäter produktion",
-        "För att befolkningen inte kan mätas",
-        "För att alla länder har samma priser",
+        "Kurserna svänger, och lokala priser skiljer sig åt",
+        "För att BNP inte mäter produktion av tjänster",
+        "För att befolkningen i många länder inte kan mätas",
+        "För att alla länder har samma priser på allt",
       ],
       answer: 0,
       explain: "Därför köpkraftskorrigerar man (PPP) med gemensamma priser.",
@@ -173,10 +173,10 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Vilket av de fem rika länderna i tabellen hade den snabbaste tillväxten 1950–2019, och varför är det ett exempel på konvergens?",
       options: [
-        "USA, eftersom landet var rikast",
-        "Japan, som var fattigast 1950 och växte snabbast (4,0 % per år)",
-        "Sverige, eftersom landet hade högst sparkvot",
-        "Storbritannien, eftersom landet var störst",
+        "USA, som var rikast 1950 och därför växte snabbast",
+        "Japan, som var fattigast 1950 och växte snabbast",
+        "Sverige, som hade högst sparkvot under perioden",
+        "Storbritannien, som hade störst befolkning 1950",
       ],
       answer: 1,
       explain: "Konvergens innebär att den som startar lägre växer snabbare.",
@@ -191,10 +191,10 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Vad innebär konstant skalavkastning?",
       options: [
-        "Att produktionen är konstant",
-        "Att $aY = F(aK, aN)$ för alla $a > 0$, t.ex. att dubbelt så mycket K och N ger dubbelt så mycket Y",
+        "Att produktionen är konstant över tiden",
+        "Att $aY = F(aK, aN)$ för alla $a > 0$",
         "Att mer kapital alltid ger lika mycket mer produktion",
-        "Att teknologin är konstant",
+        "Att den tekniska nivån är konstant",
       ],
       answer: 1,
       explain: "Exempel: $F(K,N) = \\sqrt K \\sqrt N$.",
@@ -209,10 +209,10 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Vad betyder avtagande marginalavkastning för kapital?",
       options: [
-        "Att mer kapital minskar produktionen",
-        "Att varje extra enhet kapital, givet arbetskraften, ger allt mindre extra produktion",
-        "Att kapitalet förslits",
-        "Att både K och N måste öka",
+        "Att mer kapital minskar den totala produktionen",
+        "Att varje extra enhet kapital ger allt mindre",
+        "Att kapitalet förslits snabbare ju äldre det är",
+        "Att både K och N måste öka för att Y ska öka",
       ],
       answer: 1,
       explain: "Kurvan Y/N mot K/N blir allt flackare.",
@@ -226,7 +226,12 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     },
     {
       q: "Vad händer med kurvan $F(K/N, 1)$ om den tekniska nivån höjs?",
-      options: ["Den förskjuts nedåt", "Den förskjuts uppåt (roterar moturs)", "Den blir horisontell", "Den påverkas inte"],
+      options: [
+        "Den förskjuts nedåt",
+        "Den förskjuts uppåt",
+        "Den blir horisontell",
+        "Den blir en rät linje",
+      ],
       answer: 1,
       explain: "Mer kan produceras för varje given mängd kapital per sysselsatt.",
       topic: "Produktion per sysselsatt",
@@ -234,9 +239,9 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Varför kan kapitalackumulering inte ensam ge permanent tillväxt?",
       options: [
-        "För att kapital är dyrt",
-        "För att avtagande marginalavkastning gör att ökningar i kapitalet ger allt mindre produktionsökningar",
-        "För att sparkvoten alltid är noll",
+        "För att kapital är dyrt att finansiera",
+        "På grund av avtagande marginalavkastning",
+        "För att sparkvoten alltid är noll på lång sikt",
         "För att kapital inte påverkar produktionen",
       ],
       answer: 1,
@@ -246,10 +251,10 @@ Om den **tekniska nivån höjs** kan mer produceras för varje given mängd kapi
     {
       q: "Vad är den långsiktiga effekten av en högre sparkvot enligt föreläsningen?",
       options: [
-        "Permanent högre tillväxttakt",
-        "Tillfälligt högre tillväxt och en permanent högre nivå på BNP per sysselsatt",
-        "Lägre BNP per sysselsatt",
-        "Ingen effekt alls",
+        "En permanent högre tillväxttakt i BNP per sysselsatt",
+        "En permanent högre nivå på BNP per sysselsatt",
+        "En lägre BNP per sysselsatt, eftersom konsumtionen faller",
+        "Ingen effekt alls, eftersom kapitalet förslits",
       ],
       answer: 1,
       explain: "Tillväxteffekten avstannar på grund av avtagande marginalavkastning, men nivån förblir högre.",

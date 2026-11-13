@@ -186,10 +186,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Vilka två faktorer styr främst efterfrågan på pengar i modellen?",
       options: [
-        "Prisnivån och växelkursen",
-        "Transaktionsvolymen (inkomsten) och räntan på alternativa placeringar",
+        "Prisnivån och växelkursen mot omvärlden",
+        "Inkomsten (transaktionerna) och räntan",
         "Skatterna och den offentliga konsumtionen",
-        "Inflationen och arbetslösheten",
+        "Inflationen och arbetslösheten i ekonomin",
       ],
       answer: 1,
       explain: "Mer transaktioner ger högre efterfrågan på pengar. Högre ränta på obligationer gör det dyrare att hålla pengar.",
@@ -198,10 +198,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Varför är penningefterfrågan **fallande** i räntan?",
       options: [
-        "För att högre ränta gör att folk handlar mer",
-        "För att räntan är alternativkostnaden för att hålla pengar i stället för obligationer",
+        "För att högre ränta gör att hushållen handlar mer",
+        "För att räntan är alternativkostnaden för pengar",
         "För att centralbanken drar in pengar när räntan stiger",
-        "För att pengar ger högre ränta än obligationer",
+        "För att pengar ger högre ränta än obligationer gör",
       ],
       answer: 1,
       explain: "Pengar ger ingen eller låg ränta. Ju högre räntan på obligationer är, desto mer förlorar man på att hålla pengar.",
@@ -249,10 +249,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Riksbanken köper obligationer för 1 miljard kr. Vad händer med dess balansräkning?",
       options: [
-        "Tillgångarna (obligationer) och skulderna (pengar) ökar båda med 1 miljard",
+        "Både tillgångar och skulder ökar med 1 miljard",
         "Tillgångarna ökar och skulderna minskar med 1 miljard",
-        "Bara skulderna ökar",
-        "Balansräkningen påverkas inte",
+        "Bara skulderna ökar, eftersom nya pengar skapas",
+        "Balansräkningen påverkas inte, bara sammansättningen",
       ],
       answer: 0,
       explain: "Riksbanken betalar med nya pengar (en skuld) och får obligationer (en tillgång). Det är en expansiv öppen marknadsoperation.",
@@ -287,10 +287,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Hur bedriver moderna centralbanker främst penningpolitik?",
       options: [
-        "De bestämmer penningmängden och låter räntan bli vad den blir",
-        "De bestämmer räntan och anpassar penningmängden så att den räntan gäller",
-        "De bestämmer statens budget",
-        "De bestämmer växelkursen och löner",
+        "De styr penningmängden och låter räntan bli vad den blir",
+        "De sätter räntan och anpassar penningmängden efter den",
+        "De bestämmer statens budget i samråd med riksdagen",
+        "De bestämmer växelkursen och sätter riktlinjer för lönerna",
       ],
       answer: 1,
       explain: "Centralbanken sätter en ränta och tillhandahåller den mängd pengar som efterfrågas vid den räntan.",
@@ -319,7 +319,7 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
         "Att finansiera statens budgetunderskott",
       ],
       answer: 3,
-      explain: "De tre första är de skäl som nämns. Reservkrav finns inte i Sverige.",
+      explain: "Att klara uttag, egna transaktioner och legala reservkrav är skälen som nämns. Reservkrav finns dock inte i Sverige.",
       topic: "Banker och finansiella mellanhänder",
     },
     {
@@ -337,10 +337,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Vad består efterfrågan på centralbankspengar av?",
       options: [
-        "Bara kontanter",
-        "Kontanter som hushåll och företag efterfrågar plus bankernas efterfrågan på reserver",
-        "Alla bankkonton (M1)",
-        "Statsobligationer",
+        "Bara kontanter som hushåll och företag håller",
+        "Efterfrågan på kontanter plus bankernas efterfrågan på reserver",
+        "Alla bankkonton, dvs. hela penningmängden M1",
+        "Statsobligationer som bankerna håller som säkerhet",
       ],
       answer: 1,
       explain: "Bankernas reserver hos centralbanken är lika likvida som kontanter och ingår därför i efterfrågan på centralbankspengar.",
@@ -349,10 +349,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Vad händer med efterfrågan på likviditet i en finansiell kris, som i början av pandemin?",
       options: [
-        "Den faller kraftigt eftersom folk köper fler aktier",
-        "Den ökar kraftigt eftersom aktörerna vill byta obligationer och aktier mot likvida tillgångar",
-        "Den påverkas inte",
-        "Den blir negativ",
+        "Den faller kraftigt, eftersom folk köper billiga aktier",
+        "Den ökar kraftigt när aktörerna flyr till likvida tillgångar",
+        "Den påverkas inte, eftersom penningmängden är given",
+        "Den faller, eftersom bankerna slutar hålla reserver",
       ],
       answer: 1,
       explain: "Efterfrågekurvan flyttas åt höger. Utan mer likviditet från centralbanken skulle räntan stiga.",
@@ -361,10 +361,10 @@ Prova i grafen i avsnittet ”Jämvikt på penningmarknaden”: dra upp M till �
     {
       q: "Vad innebär en likviditetsfälla?",
       options: [
-        "Bankerna har slut på reserver",
-        "Räntan är noll, penningefterfrågan horisontell, och ytterligare ökningar av penningmängden sänker inte räntan",
-        "Centralbanken kan inte trycka mer pengar",
-        "Inflationen är så hög att ingen vill hålla pengar",
+        "Att bankerna har slut på reserver hos centralbanken",
+        "Att räntan är noll och mer pengar inte sänker den",
+        "Att centralbanken inte kan trycka mer pengar",
+        "Att inflationen är så hög att ingen vill hålla pengar",
       ],
       answer: 1,
       explain: "Vid noll ränta finns ingen alternativkostnad för att hålla pengar, så den extra penningmängden hålls utan att räntan ändras. I praktiken har räntan kunnat sänkas något under noll, men inte hur långt som helst.",

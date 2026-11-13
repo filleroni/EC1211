@@ -273,10 +273,10 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
     {
       q: "Varför räknas insatsvaror inte in i BNP?",
       options: [
-        "För att de redan har beskattats",
-        "För att det skulle leda till dubbelräkning, och BNP skulle då bero på hur produktionen är organiserad mellan företag",
-        "För att insatsvaror alltid importeras",
-        "För att insatsvaror inte har något marknadspris",
+        "För att insatsvaror redan har beskattats hos det företag som sålde dem",
+        "För att deras värde redan ingår i färdigvarorna, vilket ger dubbelräkning",
+        "För att insatsvaror nästan alltid importeras och då hör till utlandets BNP",
+        "För att insatsvaror saknar marknadspris och därför inte kan värderas",
       ],
       answer: 1,
       explain: "Insatsvarans värde ingår redan i färdigvarans pris. Annars skulle BNP öka bara av att två företag delade upp produktionen i två led.",
@@ -340,7 +340,12 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
     },
     {
       q: "Anna har inget jobb och har slutat söka arbete. Hur klassificeras hon?",
-      options: ["Som arbetslös", "Som sysselsatt", "Som ej i arbetskraften", "Som deltidsarbetslös"],
+      options: [
+        "Som arbetslös, eftersom hon saknar jobb",
+        "Som sysselsatt i hushållsarbete",
+        "Som ej i arbetskraften",
+        "Som långtidsarbetslös i statistiken",
+      ],
       answer: 2,
       explain: "Bara den som aktivt söker arbete räknas som arbetslös. Anna räknas som ”ej i arbetskraften”.",
       topic: "Arbetslöshet",
@@ -355,10 +360,10 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
     {
       q: "Vilket påstående är normativt?",
       options: [
-        "Högre räntor minskar investeringarna",
+        "Högre räntor leder till att investeringarna minskar",
         "Arbetslösheten i Sverige var högre 2021 än 2019",
-        "Riksbanken borde prioritera låg arbetslöshet framför låg inflation",
-        "En skattesänkning ökar den disponibla inkomsten",
+        "Riksbanken borde prioritera låg arbetslöshet",
+        "En skattesänkning ökar hushållens disponibla inkomst",
       ],
       answer: 2,
       explain: "Normativa påståenden handlar om hur det *borde* vara. De andra påståendena kan i princip prövas mot data och är alltså positiva.",
@@ -379,9 +384,9 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
     {
       q: "Vad bestämmer främst BNP på medellång sikt (ca 3–10 år)?",
       options: [
-        "Efterfrågan på varor och tjänster",
-        "Potentiell produktion: teknologi, kapitalstock och arbetskraft",
-        "Enbart penningpolitiken",
+        "Efterfrågan på varor och tjänster, främst via konsumtionen",
+        "Potentiell produktion (teknologi, kapital, arbetskraft)",
+        "Penningpolitiken, eftersom räntan styr all produktion",
         "Befolkningstillväxt och forskning över flera decennier",
       ],
       answer: 1,
@@ -398,10 +403,10 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
     {
       q: "Vad är den viktigaste skillnaden mellan KPI och BNP-deflatorn?",
       options: [
-        "KPI mäter priser på det som konsumeras, och BNP-deflatorn priser på det som produceras",
-        "KPI mäter bara livsmedelspriser",
-        "BNP-deflatorn inkluderar importerade konsumtionsvaror men inte KPI",
-        "Det finns ingen skillnad",
+        "KPI avser konsumtion, deflatorn inhemsk produktion",
+        "KPI mäter bara livsmedelspriser och boendekostnader",
+        "Deflatorn tar med importerade konsumtionsvaror, men inte KPI",
+        "KPI mäter priser och deflatorn mäter löner",
       ],
       answer: 0,
       explain: "KPI speglar levnadskostnaderna. Deflatorn speglar priserna på inhemsk produktion. Importerade konsumtionsvaror ingår därför i KPI men inte i deflatorn.",
@@ -416,7 +421,7 @@ Grafen nedan är stiliserad. Flytta arbetslösheten och se vilken inflation som 
         "Arbetslösheten är oberoende av tillväxten",
       ],
       answer: 1,
-      explain: "Okuns lag kopplar förändringar i arbetslösheten till BNP-tillväxten. Det första alternativet beskriver Phillipskurvan.",
+      explain: "Okuns lag kopplar förändringar i arbetslösheten till BNP-tillväxten. Sambandet mellan låg arbetslöshet och hög inflation är i stället Phillipskurvan.",
       topic: "Okuns lag",
     },
     {

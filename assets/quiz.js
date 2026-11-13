@@ -34,6 +34,14 @@
       } else progress.textContent = `${done}/${questions.length} besvarade`;
     }
 
+    // Blanda svarsalternativens ordning (inte i dugga-läge, där a–d ska ligga fast som på en riktig dugga)
+    questions = questions.map(q => {
+      if (opts.letters || !q.options || q.optionFigures || q.fixedOrder) return q;
+      const order = q.options.map((_, k) => k);
+      for (let k = order.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [order[k], order[j]] = [order[j], order[k]]; }
+      return { ...q, options: order.map(k => q.options[k]), answer: order.indexOf(q.answer) };
+    });
+
     questions.forEach((q, i) => {
       const card = h("div", "card quiz-q");
       const head = h("div", "qhead");

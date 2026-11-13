@@ -220,9 +220,9 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
       q: "Varför lutar IS-kurvan nedåt i en öppen ekonomi?",
       options: [
         "Bara för att högre ränta minskar investeringarna",
-        "Högre ränta minskar investeringarna och ger högre växelkurs (via räntepariteten), vilket minskar nettoexporten",
-        "Högre ränta ökar importen direkt",
-        "Högre produktion höjer räntan",
+        "Högre ränta minskar I och stärker E, så NX faller",
+        "För att högre ränta ökar importen direkt",
+        "För att högre produktion höjer räntan via LM",
       ],
       answer: 1,
       explain: "I den öppna ekonomin finns två kanaler: investeringarna och nettoexporten.",
@@ -244,10 +244,10 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     {
       q: "Riksbanken höjer räntan vid flytande växelkurs. Vad händer?",
       options: [
-        "Y faller, i stiger och E stiger (appreciering). Effekten på NX är oklar",
-        "Y faller, i stiger och E faller. NX ökar säkert",
-        "Y ökar och E stiger",
-        "Bara räntan ändras",
+        "Y faller och E stiger; effekten på NX är oklar",
+        "Y faller och E faller; NX ökar säkert",
+        "Y ökar och E stiger; NX minskar säkert",
+        "Bara räntan ändras; Y och E är oförändrade",
       ],
       answer: 0,
       explain: "Lägre Y minskar importen, medan högre E minskar exporten. De två effekterna på NX drar åt olika håll.",
@@ -268,10 +268,10 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     {
       q: "Varför måste $i = i^*$ vid fast växelkurs och fria kapitalrörelser?",
       options: [
-        "För att centralbanken bestämmer i\\*",
-        "För att fast växelkurs innebär $E_t = \\bar E^e$, och räntepariteten då kräver $(1+i)/(1+i^*) = 1$",
-        "För att inflationen alltid är noll",
-        "För att IS-kurvan är horisontell",
+        "För att centralbanken bestämmer den utländska räntan",
+        "För att räntepariteten med $E_t = \\bar E^e$ kräver det",
+        "För att inflationen alltid är noll vid fast växelkurs",
+        "För att IS-kurvan är horisontell vid fast växelkurs",
       ],
       answer: 1,
       explain: "Om $i \\neq i^*$ skulle växelkursen behöva förväntas ändras, men det förutsätts inte ske vid fast kurs.",
@@ -279,7 +279,12 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     },
     {
       q: "Utlandets ränta höjs, och landet har fast växelkurs. Vad måste centralbanken göra?",
-      options: ["Sänka räntan", "Höja räntan lika mycket", "Ingenting", "Höja G"],
+      options: [
+        "Sänka räntan för att stötta produktionen",
+        "Höja räntan lika mycket",
+        "Ingenting, växelkursen ligger ju fast",
+        "Höja G för att motverka räntehöjningen",
+      ],
       answer: 1,
       explain: "Med fast växelkurs måste $i = i^*$. Penningpolitiken bestäms helt av omvärlden.",
       topic: "Fast växelkurs",
@@ -299,10 +304,10 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     {
       q: "Vilka tre alternativ har ett land under en spekulativ attack enligt föreläsningen?",
       options: [
-        "Höja skatterna, sänka G, höja tullarna",
-        "Ge upp och devalvera, kämpa med extremt höga räntor, eller införa valutareglering",
-        "Sänka räntan, höja G, devalvera",
-        "Byta valuta, gå med i EU, höja lönerna",
+        "Höja skatterna, sänka G eller höja tullarna",
+        "Devalvera, kämpa med höga räntor eller valutareglering",
+        "Sänka räntan, höja G eller låta lönerna falla",
+        "Byta valuta, gå med i EMU eller höja lönerna",
       ],
       answer: 1,
       explain: "Att kämpa kan leda till recession och ändå misslyckas, som i Sverige 1992.",
@@ -311,10 +316,10 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     {
       q: "Vad hände med den svenska kronan efter räntechocken i september 1992?",
       options: [
-        "Den fasta kursen höll i flera år",
-        "Valutautflödet stoppades tillfälligt, men i november 1992 släpptes kronan och den föll med över 20 %",
-        "Kronan apprecierade kraftigt",
-        "Sverige införde euron",
+        "Den fasta kursen höll, och räntan sänktes snart igen",
+        "Kronan släpptes i november och föll över 20 %",
+        "Kronan apprecierade kraftigt när kapital strömmade in",
+        "Sverige anslöt kronan till euron samma höst",
       ],
       answer: 1,
       explain: "Styrräntan 500 % (ca 1,37 % per dag) kunde bara tillfälligt försvara kursen.",
@@ -323,10 +328,10 @@ Räntechocken visar alternativ 2 ovan: att kämpa med extremt höga räntor fung
     {
       q: "Vilka två faktorer gör en gemensam valuta fördelaktig enligt Mundells teori om optimala valutaområden?",
       options: [
-        "Låg inflation och låg statsskuld",
-        "Synkroniserade konjunkturer och rörlig arbetskraft mellan länderna",
-        "Hög ränta och fast växelkurs",
-        "Gemensamt språk och gemensam skatt",
+        "Låg inflation och låg statsskuld i alla länderna",
+        "Synkroniserade konjunkturer och rörlig arbetskraft",
+        "Hög ränta och fast växelkurs mot dollarn",
+        "Gemensamt språk och gemensamt skattesystem",
       ],
       answer: 1,
       explain: "Om länderna har konjunkturen i fas behövs ingen egen penningpolitik, och rörlig arbetskraft kan ersätta växelkursanpassningar.",

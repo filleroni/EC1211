@@ -179,10 +179,10 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Vad är humankapital?",
       options: [
-        "Antalet sysselsatta",
-        "De kunskaper och färdigheter som individer har, ett slags kapital som kan ackumuleras",
-        "Maskiner och fabriker",
-        "Pengar på banken",
+        "Antalet sysselsatta i ekonomin",
+        "Individers kunskaper och färdigheter",
+        "Maskiner, fabriker och byggnader",
+        "Hushållens sparande på banken",
       ],
       answer: 1,
       explain: "Mer humankapital per arbetare ger, precis som fysiskt kapital, högre produktion per arbetare.",
@@ -191,10 +191,10 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Vilka två faktorer styr enligt föreläsningen tillväxttakten i den tekniska utvecklingen?",
       options: [
-        "Sparkvoten och räntan",
-        "Produktiviteten i FoU och möjligheten för företaget att tjäna pengar på sina idéer",
+        "Sparkvoten och den reala räntan",
+        "FoU:s produktivitet och möjligheten att tjäna på idéer",
         "Befolkningstillväxten och kapitalförslitningen",
-        "Växelkursen och inflationen",
+        "Växelkursen och inflationstakten i ekonomin",
       ],
       answer: 1,
       explain: "Möjligheten att tjäna pengar påverkas bland annat av patentsystemet.",
@@ -203,10 +203,10 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Varför beskrivs patentsystemet som en balansgång?",
       options: [
-        "För att patent är gratis",
-        "För att patent ger incitament till FoU men också monopolmakt",
-        "För att patent sänker forskningskostnaderna",
-        "För att patent gäller för alltid",
+        "För att patent är gratis men tar lång tid att få",
+        "Det ger incitament till FoU men också monopolmakt",
+        "För att patent sänker kostnaderna för forskning",
+        "För att patent gäller för alltid och aldrig kan hävas",
       ],
       answer: 1,
       explain: "Utan patent får uppfinnaren svårt att tjäna pengar, men med patent kan andra inte använda idén fritt.",
@@ -222,10 +222,10 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Vad visade Paul Romer (ekonomipriset 2018)?",
       options: [
-        "Att institutioner påverkar välståndet",
-        "Hur marknadsekonomin kan producera icke-rivaliserande varor om de är exkluderbara",
-        "Att Phillipskurvan är instabil",
-        "Att sparkvoten inte påverkar BNP",
+        "Att institutioner avgör välståndet på lång sikt",
+        "Att exkluderbara idéer kan produceras på marknaden",
+        "Att Phillipskurvan blir instabil vid hög inflation",
+        "Att sparkvoten inte påverkar BNP per capita",
       ],
       answer: 1,
       explain: "Om det går att sälja rätten att använda en idé finns det incitament att ta fram den.",
@@ -240,7 +240,12 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     },
     {
       q: "Vilket är investeringsbehovet för att k = K/(AN) ska vara konstant?",
-      options: ["$\\delta k$", "$(\\delta + g_A + g_N)k$", "$(g_A + g_N)k$", "$s f(k)$"],
+      options: [
+        "$\\delta k$",
+        "$(\\delta + g_A + g_N)k$",
+        "$(g_A + g_N)k$",
+        "$(\\delta + g_A - g_N)k$",
+      ],
       answer: 1,
       explain: "Deprecieringen ska ersättas, och K måste dessutom växa i takt med AN.",
       topic: "Balanserad tillväxt",
@@ -268,9 +273,9 @@ Det finns många historiska exempel på hur viktiga institutioner är:
       q: "Sparkvoten ökar i en ekonomi med teknisk utveckling. Vad händer?",
       options: [
         "Den långsiktiga tillväxttakten ökar permanent",
-        "Under en övergångsfas växer K och Y snabbare än $g_A + g_N$, och sedan växer ekonomin på en högre, parallell tillväxtbana",
-        "Y/N faller",
-        "Inget",
+        "Tillfälligt högre tillväxt, sedan en högre parallell bana",
+        "Y/N faller, eftersom konsumtionen minskar",
+        "Inget, eftersom tillväxten bestäms av g_A",
       ],
       answer: 1,
       explain: "Nivån blir permanent högre, men den långsiktiga tillväxttakten bestäms av $g_A + g_N$.",
@@ -279,8 +284,8 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Vad illustrerar jämförelsen mellan Nord- och Sydkorea?",
       options: [
-        "Att geografi avgör välståndet",
-        "Hur viktiga institutionerna är för tillväxten, eftersom länderna har samma folk, språk och historia men olika institutioner",
+        "Att geografi och klimat avgör välståndet",
+        "Att institutioner är avgörande för tillväxt",
         "Att sparkvoten är det enda som spelar roll",
         "Att befolkningstillväxten avgör inkomsten",
       ],
@@ -291,10 +296,10 @@ Det finns många historiska exempel på hur viktiga institutioner är:
     {
       q: "Vilka fick ekonomipriset 2024, och för vad?",
       options: [
-        "Bernanke, Diamond och Dybvig för forskning om banker",
-        "Acemoglu, Johnson och Robinson för studier av hur institutioner formas och påverkar välstånd",
-        "Paul Romer för endogen tillväxt",
-        "Mundell för optimala valutaområden",
+        "Bernanke, Diamond och Dybvig, för forskning om banker",
+        "Acemoglu, Johnson och Robinson, för forskning om institutioner",
+        "Paul Romer, för teorin om endogen teknisk utveckling",
+        "Robert Mundell, för teorin om optimala valutaområden",
       ],
       answer: 1,
       explain: "Institutioner som äganderätt och politisk makt är centrala för tillväxten.",

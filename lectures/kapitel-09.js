@@ -232,10 +232,10 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
     {
       q: "Varför räcker det inte att titta på arbetslöshetsnivån för att förstå arbetsmarknaden?",
       options: [
-        "För att arbetslösheten alltid är densamma",
-        "För att samma nivå kan bero på stora flöden (många byter jobb snabbt) eller små flöden (de arbetslösa har svårt att hitta jobb)",
-        "För att arbetslösheten inte kan mätas",
-        "För att flödena alltid är noll",
+        "För att arbetslösheten alltid är densamma över tid",
+        "Samma nivå kan bero på stora eller små flöden",
+        "För att arbetslösheten inte går att mäta exakt",
+        "För att flödena in och ut alltid tar ut varandra",
       ],
       answer: 1,
       explain: "Långtidsarbetslöshet och kort sökarbetslöshet är olika problem, trots att de kan ge samma nivå.",
@@ -244,9 +244,9 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
     {
       q: "Enligt föreläsningen är löntagarnas förhandlingsstyrka …",
       options: [
-        "högre ju lättare de är att ersätta",
-        "högre ju svårare de är att ersätta, och lägre ju svårare det är för dem att hitta alternativa jobb",
-        "oberoende av arbetslösheten",
+        "högre ju lättare det är att ersätta dem",
+        "högre ju svårare det är att ersätta dem",
+        "oberoende av arbetslöshetens nivå",
         "alltid högre i USA än i Europa",
       ],
       answer: 1,
@@ -256,10 +256,10 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
     {
       q: "Vad säger effektivitetslöneteorin?",
       options: [
-        "Att lönen alltid sätts till reservationslönen",
-        "Att det inte lönar sig för företag att sätta så låg lön som möjligt, eftersom de anställda då inte har något att förlora på att förlora jobbet",
+        "Att lönen alltid sätts lika med reservationslönen",
+        "Att lägsta möjliga lön inte lönar sig för företagen",
         "Att lönerna inte påverkas av arbetslösheten",
-        "Att produktiviteten är oberoende av lönen",
+        "Att produktiviteten är oberoende av lönenivån",
       ],
       answer: 1,
       explain: "Förlusten av att förlora jobbet beror på lönen och arbetslösheten. Lägre arbetslöshet ger därför tryck uppåt på lönerna.",
@@ -292,9 +292,9 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
     {
       q: "Varför är PS-kurvan horisontell i ett diagram med arbetslösheten på x-axeln?",
       options: [
-        "För att reallönen enligt prissättningen är $1/(1+m)$, oberoende av u",
-        "För att lönerna är fasta",
-        "För att företagen inte bryr sig om kostnader",
+        "För att prissättningen ger $W/P = 1/(1+m)$",
+        "För att de nominella lönerna är fasta",
+        "För att företagen inte bryr sig om sina kostnader",
         "För att arbetslösheten alltid är konstant",
       ],
       answer: 0,
@@ -317,9 +317,9 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
       q: "Arbetslöshetsersättningen höjs. Vad händer i WS-PS-modellen?",
       options: [
         "PS skiftar nedåt, reallönen faller och u_n ökar",
-        "WS skiftar uppåt, u_n ökar och reallönen är oförändrad",
+        "WS skiftar uppåt och u_n ökar",
         "WS skiftar nedåt och u_n minskar",
-        "Ingenting",
+        "PS skiftar uppåt, reallönen stiger och u_n minskar",
       ],
       answer: 1,
       explain: "z ökar och stärker löntagarnas förhandlingsposition. Reallönen bestäms av PS och är oförändrad.",
@@ -346,10 +346,10 @@ Omvänt ger **ökad konkurrens** (lägre m) både högre reallön och lägre jä
     {
       q: "Varför är ”naturlig arbetslöshet” enligt föreläsningen inte ett så bra namn på jämviktsarbetslösheten?",
       options: [
-        "För att den alltid är noll",
-        "För att nivån inte är av naturen given, utan beror på institutioner och konkurrens (z och m)",
-        "För att den inte kan beräknas",
-        "För att den bara gäller USA",
+        "För att den alltid är noll i en fungerande ekonomi",
+        "För att den beror på institutioner och konkurrens",
+        "För att den inte går att beräkna eller skatta",
+        "För att begreppet bara används för USA",
       ],
       answer: 1,
       explain: "Politik som påverkar z eller m ändrar u_n.",

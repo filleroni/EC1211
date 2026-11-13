@@ -231,10 +231,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Vad mäter realräntan?",
       options: [
-        "Räntan i kronor",
-        "Hur mycket mer varor och tjänster man får om ett år för varje enhet konsumtion man avstår i dag",
-        "Räntan efter skatt",
-        "Räntan inklusive riskpremie",
+        "Räntan uttryckt i kronor",
+        "Räntan uttryckt i varor och tjänster",
+        "Räntan efter att skatten dragits av",
+        "Räntan inklusive bankens riskpremie",
       ],
       answer: 1,
       explain: "Realräntan är räntan uttryckt i varor och tjänster, dvs. justerad för (förväntad) inflation.",
@@ -268,10 +268,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Varför kan den faktiska riskpremien bli **större** än $x = \\frac{p}{1-p}(1+i)$?",
       options: [
-        "För att centralbanken lägger på en avgift",
-        "För att långivare är riskaverta och vill ha extra kompensation för att bära risk",
-        "För att inflationen alltid är positiv",
-        "För att formeln ignorerar skatter",
+        "För att centralbanken lägger på en avgift för riskfyllda lån",
+        "För att långivare är riskaverta",
+        "För att inflationen alltid är positiv och urholkar avkastningen",
+        "För att formeln bortser från skatten på ränteinkomster",
       ],
       answer: 1,
       explain: "Formeln ger bara samma *förväntade* avkastning som den riskfria räntan. En riskavert långivare kräver mer.",
@@ -292,10 +292,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Vad är nackdelen med en högre hävstångsgrad?",
       options: [
-        "Lägre förväntad avkastning på eget kapital",
-        "Mindre buffert mot förluster och därmed högre konkursrisk",
-        "Högre inlåningsränta enligt lag",
-        "Bankerna får inte låna ut",
+        "Lägre förväntad avkastning på det egna kapitalet",
+        "Mindre buffert mot förluster",
+        "Högre inlåningsränta, som lagen då kräver",
+        "Att banken inte längre får låna ut till företag",
       ],
       answer: 1,
       explain: "Med hävstång 10 tål banken bara förluster på 10 % av tillgångarna, jämfört med 20 % vid hävstång 5.",
@@ -304,10 +304,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "En bank gör stora förluster så att kapitaltäckningen faller. Hur påverkar det ekonomin enligt föreläsningen?",
       options: [
-        "Banken ökar utlåningen och investeringarna ökar",
-        "Banken minskar utlåningen och höjer utlåningsräntan (x ökar), så investeringarna och produktionen faller",
-        "Styrräntan stiger automatiskt",
-        "Ingen effekt på realekonomin",
+        "Banken ökar utlåningen för att tjäna tillbaka förlusterna",
+        "Utlåningen minskar och x stiger, så I och Y faller",
+        "Styrräntan stiger automatiskt, vilket dämpar efterfrågan",
+        "Ingen effekt på realekonomin, bara på bankens ägare",
       ],
       answer: 1,
       explain: "Högre riskpremie flyttar IS åt vänster.",
@@ -316,10 +316,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Vad innebär bankernas löptidstransformering?",
       options: [
-        "Bankerna omvandlar likvida insättningar till illikvida lån och skapar därigenom likvida medel",
-        "Bankerna förlänger statens lån",
-        "Bankerna växlar valuta",
-        "Bankerna omvandlar aktier till obligationer",
+        "Likvida insättningar finansierar illikvida lån",
+        "Att bankerna förlänger löptiden på statens lån",
+        "Att bankerna växlar kronor mot utländsk valuta",
+        "Att bankerna omvandlar aktier till obligationer",
       ],
       answer: 0,
       explain: "Insättarna kan ta ut sina pengar när som helst, men lånen kan inte kallas in snabbt. Det är samhällsnyttigt men skapar sårbarhet.",
@@ -328,10 +328,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Varför kan en bankrusning bli en självuppfyllande profetia?",
       options: [
-        "För att centralbanken alltid stänger banker vid rykten",
-        "För att om alla tar ut pengarna samtidigt måste banken sälja illikvida tillgångar till pressade priser (fire sales), och då kan den faktiskt gå omkull",
-        "För att insättningsgarantin upphör",
-        "För att räntan blir negativ",
+        "För att centralbanken alltid stänger banker när rykten sprids",
+        "För att uttagen tvingar fram fire sales som kan fälla banken",
+        "För att insättningsgarantin upphör när många tar ut pengar",
+        "För att räntan blir negativ när insättarna lämnar banken",
       ],
       answer: 1,
       explain: "Även en i grunden sund bank kan falla om alla insättare vill ha tillbaka sina pengar på en gång.",
@@ -340,10 +340,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Vilka två åtgärder nämns som lösningar på problemet med bankrusningar?",
       options: [
-        "Höjd styrränta och lägre skatter",
+        "Höjd styrränta och sänkta skatter på sparande",
         "Insättningsgarantier och kapitaltäckningskrav",
-        "Fast växelkurs och tullar",
-        "Förbud mot utlåning och kontantstopp",
+        "Fast växelkurs och tullar på finansiella tjänster",
+        "Förbud mot utlåning och tillfälligt kontantstopp",
       ],
       answer: 1,
       explain: "Insättningsgarantier gör att insättarna inte behöver rusa till banken, och kapitaltäckningskrav gör bankerna mer motståndskraftiga.",
@@ -365,9 +365,9 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
       q: "I den utvidgade IS-LM-modellen: vilken ränta påverkar investeringarna?",
       options: [
         "Den nominella styrräntan i",
-        "Den reala låneräntan inklusive riskpremie, r + x",
-        "Den utländska räntan",
-        "Inlåningsräntan",
+        "Den reala låneräntan, r + x",
+        "Den utländska räntan i\\*",
+        "Bankernas inlåningsränta",
       ],
       answer: 1,
       explain: "IS: $Y = C(Y-T) + I(Y, r+x) + G$, där $r = i - \\pi^e$.",
@@ -377,7 +377,7 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
       q: "Riskpremien x ökar medan centralbanken håller den reala styrräntan oförändrad. Vad händer?",
       options: [
         "LM flyttas uppåt och Y minskar",
-        "IS flyttas åt vänster och Y minskar, trots att styrräntan är oförändrad",
+        "IS flyttas åt vänster och Y minskar",
         "IS flyttas åt höger och Y ökar",
         "Ingenting, eftersom styrräntan är oförändrad",
       ],
@@ -400,10 +400,10 @@ Oron och misstroendet spred sig till euroområdet. Stater med **höga skulder** 
     {
       q: "Varför ledde fallande bostadspriser i USA till stora bankförluster?",
       options: [
-        "Bankerna ägde alla hus direkt",
-        "Många lån saknade regressrätt (non-recourse): låntagaren kunde lämna huset till banken och bli kvitt lånet när priset föll under lånebeloppet",
-        "Fed höjde räntan till 20 %",
-        "Bostadslån var förbjudna",
+        "Bankerna ägde själva de flesta husen och fick skriva ned värdet",
+        "Låntagare kunde lämna huset och bli kvitt lånet (non-recourse)",
+        "Fed höjde räntan kraftigt, så att alla bolån blev olönsamma",
+        "Staten förbjöd tvångsförsäljningar, så bankerna fick inget tillbaka",
       ],
       answer: 1,
       explain: "Då hamnade förlusterna hos bankerna. Kreditgivningen hade dessutom varit mycket slapp (NINJA-lån).",
