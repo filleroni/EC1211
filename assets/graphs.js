@@ -129,8 +129,10 @@
         }
         const N = 600, [x0, x1] = ps.x;
         const d = x => evalAt(a, x, p) - evalAt(b, x, p);
-        let px = x0, pd = d(x0);
-        for (let i = 1; i <= N; i++) {
+        let px = x0, pd = d(x0), i0 = 1;
+        // Om kurvorna möts precis i startpunkten (t.ex. båda går genom origo): leta efter nästa skärning
+        if (pd === 0 || (isFinite(pd) && Math.abs(pd) < 1e-12)) { px = x0 + (x1 - x0) / N; pd = d(px); i0 = 2; }
+        for (let i = i0; i <= N; i++) {
           const x = x0 + (x1 - x0) * i / N, dx = d(x);
           if (isFinite(pd) && isFinite(dx) && (pd === 0 || pd * dx < 0)) {
             let lo = px, hi = x;
