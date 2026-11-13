@@ -76,6 +76,11 @@
           (ok ? "" : correctText ? `Rätt svar: ${window.mdInline ? window.mdInline(correctText) : correctText}. ` : "") +
           (q.explain ? (window.mdInline ? window.mdInline(q.explain) : q.explain) : "");
         fb.appendChild(ex);
+        if (mode === "practice") {
+          const again = h("button", "ghost btn-reset retry", "Försök igen");
+          again.addEventListener("click", () => st.reset());
+          fb.appendChild(again);
+        }
         window.typeset && window.typeset(fb);
       };
 
@@ -98,6 +103,11 @@
           answers[i] = inp.value.trim();
           if (mode === "practice") st.check();
           updateProgress();
+        };
+        st.reset = () => {
+          answers[i] = null; st.correct = null;
+          inp.disabled = false; btn.disabled = false; inp.value = "";
+          fb.innerHTML = ""; updateProgress(); inp.focus();
         };
         btn.addEventListener("click", commit);
         inp.addEventListener("keydown", e => { if (e.key === "Enter") commit(); });
@@ -125,6 +135,11 @@
           });
           showFeedback(st.correct, q.options[q.answer]);
         };
+        st.reset = () => {
+          answers[i] = null; st.correct = null;
+          btns.forEach(b => { b.disabled = false; b.classList.remove("correct", "wrong", "selected"); });
+          fb.innerHTML = ""; updateProgress();
+        };
       }
       card.appendChild(fb);
       wrap.appendChild(card);
@@ -132,6 +147,11 @@
 
     const result = h("div");
     status.append(progress);
+    if (mode === "practice") {
+      const all = h("button", "ghost btn-reset", "Börja om alla frågor");
+      all.addEventListener("click", () => { checkers.forEach(c => c.reset && c.reset()); wrap.scrollIntoView({ behavior: "smooth" }); });
+      status.append(all);
+    }
     if (mode === "exam") {
       const submit = h("button", null, "Lämna in");
       submit.addEventListener("click", () => {
