@@ -96,122 +96,131 @@
   }
 
   /* ---------- curves ---------- */
+  // spec.panels (valfritt): flera diagram som delar samma reglage och readout,
+  // t.ex. IS-LM ovanför Phillipskurvan. Varje panel har egna x, y, xLabel, yLabel, curves, points, arrows, texts.
   function renderCurves(root, spec) {
     const params = spec.params || {};
     const names = Object.keys(params);
     const start = {}; names.forEach(n => start[n] = params[n].value);
     const state = { ...start };
-    const curves = (spec.curves || []).map((c, i) => ({
-      ...c,
-      color: c.color || COLORS[i % COLORS.length],
-      f: c.fn ? compile(c.fn, names) : null,
-      xf: c.xAt != null ? compile(String(c.xAt), names) : null,
-    }));
-    const byLabel = Object.fromEntries(curves.map(c => [c.label, c]));
-    const clipId = "clip" + Math.random().toString(36).slice(2);
-
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": spec.title || "graph" });
-    root.appendChild(svg);
+    const vals = p => names.map(n => p[n]);
     const readout = html("div", "graph-readout");
 
-    function vals(p) { return names.map(n => p[n]); }
+    function makePanel(ps) {
+      const curves = (ps.curves || []).map((c, i) => ({
+        ...c,
+        color: c.color || COLORS[i % COLORS.length],
+        f: c.fn ? compile(c.fn, names) : null,
+        xf: c.xAt != null ? compile(String(c.xAt), names) : null,
+      }));
+      const byLabel = Object.fromEntries(curves.map(c => [c.label, c]));
+      const clipId = "clip" + Math.random().toString(36).slice(2);
+      if (ps !== spec && ps.title) root.appendChild(html("div", "panel-title", ps.title));
+      const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": ps.title || spec.title || "graph" });
+      root.appendChild(svg);
+      const evalAt = (c, x, p) => c.f(...vals(p), x);
 
-    function evalAt(c, x, p) { return c.f(...vals(p), x); }
-
-    function intersect(a, b, p) {
-      if (a.xf && b.xf) return null;
-      if (a.xf || b.xf) {
-        const v = a.xf || b.xf, other = a.xf ? b : a;
-        const x = v(...vals(p), 0);
-        return { x, y: evalAt(other, x, p) };
-      }
-      const N = 600, [x0, x1] = spec.x;
-      const d = x => evalAt(a, x, p) - evalAt(b, x, p);
-      let px = x0, pd = d(x0);
-      for (let i = 1; i <= N; i++) {
-        const x = x0 + (x1 - x0) * i / N, dx = d(x);
-        if (isFinite(pd) && isFinite(dx) && (pd === 0 || pd * dx < 0)) {
-          let lo = px, hi = x;
-          for (let k = 0; k < 60; k++) { const m = (lo + hi) / 2; (d(lo) * d(m) <= 0) ? hi = m : lo = m; }
-          const xm = (lo + hi) / 2;
-          return { x: xm, y: evalAt(a, xm, p) };
+      function intersect(a, b, p) {
+        if (a.xf && b.xf) return null;
+        if (a.xf || b.xf) {
+          const v = a.xf || b.xf, other = a.xf ? b : a;
+          const x = v(...vals(p), 0);
+          return { x, y: evalAt(other, x, p) };
         }
-        px = x; pd = dx;
+        const N = 600, [x0, x1] = ps.x;
+        const d = x => evalAt(a, x, p) - evalAt(b, x, p);
+        let px = x0, pd = d(x0);
+        for (let i = 1; i <= N; i++) {
+          const x = x0 + (x1 - x0) * i / N, dx = d(x);
+          if (isFinite(pd) && isFinite(dx) && (pd === 0 || pd * dx < 0)) {
+            let lo = px, hi = x;
+            for (let k = 0; k < 60; k++) { const m = (lo + hi) / 2; (d(lo) * d(m) <= 0) ? hi = m : lo = m; }
+            const xm = (lo + hi) / 2;
+            return { x: xm, y: evalAt(a, xm, p) };
+          }
+          px = x; pd = dx;
+        }
+        return null;
       }
-      return null;
+
+      function pathFor(c, p, sx, sy) {
+        if (c.xf) {
+          const x = c.xf(...vals(p), 0);
+          return `M${sx(x)},${sy(ps.y[0])}L${sx(x)},${sy(ps.y[1])}`;
+        }
+        const lo = c.domain ? Math.max(c.domain[0], ps.x[0]) : ps.x[0];
+        const hi = c.domain ? Math.min(c.domain[1], ps.x[1]) : ps.x[1];
+        let d = "", pen = false;
+        const N = 300, span = ps.y[1] - ps.y[0];
+        for (let i = 0; i <= N; i++) {
+          const x = lo + (hi - lo) * i / N, y = evalAt(c, x, p);
+          if (!isFinite(y) || y < ps.y[0] - 3 * span || y > ps.y[1] + 3 * span) { pen = false; continue; }
+          d += (pen ? "L" : "M") + sx(x).toFixed(1) + "," + sy(y).toFixed(1);
+          pen = true;
+        }
+        return d;
+      }
+
+      function draw(found) {
+        svg.innerHTML = "";
+        clipPath(svg, clipId);
+        const { sx, sy } = frame(svg, ps);
+        const plot = el("g", { "clip-path": `url(#${clipId})` }, svg);
+        const changed = names.some(n => state[n] !== start[n]);
+        curves.forEach(c => {
+          if (c.ghost && changed) {
+            el("path", { d: pathFor(c, start, sx, sy), fill: "none", stroke: c.color, "stroke-width": 2,
+              "stroke-dasharray": "6 5", opacity: .45 }, plot);
+          }
+          el("path", { d: pathFor(c, state, sx, sy), fill: "none", stroke: c.color, "stroke-width": 2.6,
+            "stroke-dasharray": c.dashed ? "7 5" : "none" }, plot);
+          let lx, ly;
+          if (c.xf) { lx = c.xf(...vals(state), 0); ly = ps.y[1] - (ps.y[1] - ps.y[0]) * .1; }
+          else if (c.labelAt != null) { lx = c.labelAt; ly = evalAt(c, lx, state); }
+          else {
+            const hi = c.domain ? Math.min(c.domain[1], ps.x[1]) : ps.x[1];
+            for (let k = 0; k <= 60; k++) {
+              const x = hi - (hi - ps.x[0]) * k / 100, y = evalAt(c, x, state);
+              if (isFinite(y) && y >= ps.y[0] && y <= ps.y[1] - (ps.y[1] - ps.y[0]) * .06) { lx = x; ly = y; break; }
+            }
+          }
+          if (lx != null) el("text", { x: Math.min(sx(lx) + 6, W - M.r - 4), y: sy(ly) - 8, fill: c.color,
+            "font-weight": 700, "text-anchor": sx(lx) > W - M.r - 40 ? "end" : "start", style: `fill:${c.color}` }, plot).textContent = c.label;
+        });
+        (ps.points || []).forEach(pt => {
+          const a = byLabel[pt.between[0]], b = byLabel[pt.between[1]];
+          if (!a || !b) return;
+          if (pt.ghost !== false && changed) {
+            const p0 = intersect(a, b, start);
+            if (p0) el("circle", { cx: sx(p0.x), cy: sy(p0.y), r: 4.5, fill: "var(--muted)", opacity: .6 }, plot);
+          }
+          const p = intersect(a, b, state);
+          found[pt.label] = p;
+          if (!p) return;
+          if (pt.guides !== false) {
+            el("line", { x1: sx(p.x), x2: sx(p.x), y1: sy(p.y), y2: sy(ps.y[0]), class: "guide" }, plot);
+            if (pt.guides !== "v") el("line", { x1: sx(ps.x[0]), x2: sx(p.x), y1: sy(p.y), y2: sy(p.y), class: "guide" }, plot);
+          }
+          if (pt.dot !== false) el("circle", { cx: sx(p.x), cy: sy(p.y), r: 6, fill: "var(--ink)", class: "eq-dot" }, plot);
+          if (pt.showLabel !== false) el("text", { x: sx(p.x) + 9, y: sy(p.y) + 16, "font-weight": 700 }, plot).textContent = pt.label;
+          if (pt.xMark) el("text", { x: sx(p.x), y: H - M.b + 18, "text-anchor": "middle", "font-weight": 700 }, svg).textContent = pt.xMark;
+        });
+        (ps.arrows || []).forEach(a => {
+          el("line", { x1: sx(a.from[0]), y1: sy(a.from[1]), x2: sx(a.to[0]), y2: sy(a.to[1]), stroke: "var(--ink)",
+            "stroke-width": 1.8, "marker-end": `url(#${clipId}-arrow)` }, svg);
+        });
+        (ps.texts || []).forEach(t => {
+          el("text", { x: sx(t.at[0]), y: sy(t.at[1]), "font-weight": 700, "text-anchor": t.anchor || "middle" }, svg).textContent = t.text;
+        });
+      }
+      return { draw };
     }
 
-    function pathFor(c, p, sx, sy) {
-      if (c.xf) {
-        const x = c.xf(...vals(p), 0);
-        return `M${sx(x)},${sy(spec.y[0])}L${sx(x)},${sy(spec.y[1])}`;
-      }
-      const lo = c.domain ? Math.max(c.domain[0], spec.x[0]) : spec.x[0];
-      const hi = c.domain ? Math.min(c.domain[1], spec.x[1]) : spec.x[1];
-      let d = "", pen = false;
-      const N = 300, span = spec.y[1] - spec.y[0];
-      for (let i = 0; i <= N; i++) {
-        const x = lo + (hi - lo) * i / N, y = evalAt(c, x, p);
-        if (!isFinite(y) || y < spec.y[0] - 3 * span || y > spec.y[1] + 3 * span) { pen = false; continue; }
-        d += (pen ? "L" : "M") + sx(x).toFixed(1) + "," + sy(y).toFixed(1);
-        pen = true;
-      }
-      return d;
-    }
+    const panels = (spec.panels || [spec]).map(makePanel);
 
     function draw() {
-      svg.innerHTML = "";
-      clipPath(svg, clipId);
-      const { sx, sy } = frame(svg, spec);
-      const plot = el("g", { "clip-path": `url(#${clipId})` }, svg);
-      const changed = names.some(n => state[n] !== start[n]);
-      curves.forEach(c => {
-        if (c.ghost && changed) {
-          el("path", { d: pathFor(c, start, sx, sy), fill: "none", stroke: c.color, "stroke-width": 2,
-            "stroke-dasharray": "6 5", opacity: .45 }, plot);
-        }
-        el("path", { d: pathFor(c, state, sx, sy), fill: "none", stroke: c.color, "stroke-width": 2.6,
-          "stroke-dasharray": c.dashed ? "7 5" : "none" }, plot);
-        // label near right end (or top for vertical lines)
-        let lx, ly;
-        if (c.xf) { lx = c.xf(...vals(state), 0); ly = spec.y[1] - (spec.y[1] - spec.y[0]) * .1; }
-        else if (c.labelAt != null) { lx = c.labelAt; ly = evalAt(c, lx, state); }
-        else {
-          const hi = c.domain ? Math.min(c.domain[1], spec.x[1]) : spec.x[1];
-          for (let k = 0; k <= 60; k++) {
-            const x = hi - (hi - spec.x[0]) * k / 100, y = evalAt(c, x, state);
-            if (isFinite(y) && y >= spec.y[0] && y <= spec.y[1] - (spec.y[1] - spec.y[0]) * .06) { lx = x; ly = y; break; }
-          }
-        }
-        if (lx != null) el("text", { x: Math.min(sx(lx) + 6, W - M.r - 4), y: sy(ly) - 8, fill: c.color,
-          "font-weight": 700, "text-anchor": sx(lx) > W - M.r - 40 ? "end" : "start", style: `fill:${c.color}` }, plot).textContent = c.label;
-      });
       const found = {};
-      (spec.points || []).forEach(pt => {
-        const a = byLabel[pt.between[0]], b = byLabel[pt.between[1]];
-        if (!a || !b) return;
-        if (pt.ghost !== false && changed) {
-          const p0 = intersect(a, b, start);
-          if (p0) el("circle", { cx: sx(p0.x), cy: sy(p0.y), r: 4.5, fill: "var(--muted)", opacity: .6 }, plot);
-        }
-        const p = intersect(a, b, state);
-        found[pt.label] = p;
-        if (!p) return;
-        if (pt.guides !== false) {
-          el("line", { x1: sx(p.x), x2: sx(p.x), y1: sy(p.y), y2: sy(spec.y[0]), class: "guide" }, plot);
-          if (pt.guides !== "v") el("line", { x1: sx(spec.x[0]), x2: sx(p.x), y1: sy(p.y), y2: sy(p.y), class: "guide" }, plot);
-        }
-        if (pt.dot !== false) el("circle", { cx: sx(p.x), cy: sy(p.y), r: 6, fill: "var(--ink)", class: "eq-dot" }, plot);
-        if (pt.showLabel !== false) el("text", { x: sx(p.x) + 9, y: sy(p.y) + 16, "font-weight": 700 }, plot).textContent = pt.label;
-        if (pt.xMark) el("text", { x: sx(p.x), y: H - M.b + 18, "text-anchor": "middle", "font-weight": 700 }, svg).textContent = pt.xMark;
-      });
-      (spec.arrows || []).forEach(a => {
-        el("line", { x1: sx(a.from[0]), y1: sy(a.from[1]), x2: sx(a.to[0]), y2: sy(a.to[1]), stroke: "var(--ink)",
-          "stroke-width": 1.8, "marker-end": `url(#${clipId}-arrow)` }, svg);
-      });
-      (spec.texts || []).forEach(t => {
-        el("text", { x: sx(t.at[0]), y: sy(t.at[1]), "font-weight": 700, "text-anchor": t.anchor || "middle" }, svg).textContent = t.text;
-      });
+      panels.forEach(p => p.draw(found));
       if (spec.readout) {
         readout.textContent = spec.readout.replace(/\{([^}]+)\}/g, (_, key) => {
           let dec = null;

@@ -135,3 +135,5 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 .drill-table tr:last-child td { border-bottom: none; }
 .drill-table td:first-child { width: 42%; }
 @media (max-width: 600px) { .drill-row { flex-wrap: wrap; } .topbar nav a { margin-left: 8px; font-size: .9rem; } }
+.panel-title { font-size: .85rem; font-weight: 600; color: var(--muted); margin: 6px 0 -4px; }
+.graph svg + .panel-title { margin-top: 2px; }
