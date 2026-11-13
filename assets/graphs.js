@@ -214,12 +214,16 @@
       });
       if (spec.readout) {
         readout.textContent = spec.readout.replace(/\{([^}]+)\}/g, (_, key) => {
-          if (key[0] === "=") { // computed value, e.g. {=1/(1-c1)}
-            try { return fmt(compile(key.slice(1), names)(...vals(state), 0)); } catch (e) { return "–"; }
+          let dec = null;
+          const dm = /:(\d)$/.exec(key);
+          if (dm) { dec = +dm[1]; key = key.slice(0, -2); }
+          const out = v => (dec == null || !isFinite(v)) ? fmt(v) : v.toFixed(dec).replace(".", ",").replace("-", "−");
+          if (key[0] === "=") { // computed value, e.g. {=1/(1-c1)} or {=E:4} for 4 decimals
+            try { return out(compile(key.slice(1), names)(...vals(state), 0)); } catch (e) { return "–"; }
           }
           const [lab, axis] = key.split(".");
-          if (found[lab] && axis) return fmt(found[lab][axis]);
-          if (key in state) return fmt(state[key]);
+          if (found[lab] && axis) return out(found[lab][axis]);
+          if (key in state) return out(state[key]);
           return "–";
         });
       }
